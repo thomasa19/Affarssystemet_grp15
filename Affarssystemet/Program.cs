@@ -11,6 +11,7 @@ namespace Affarssystemet_grp15
         static void Main(string[] args)
         {
             Console.WriteLine("Hello!");
+            Console.WriteLine("Hej"); //Simonlidm
         }
     }
 }
