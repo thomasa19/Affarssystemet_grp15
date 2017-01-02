@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Affarssystemet
+namespace Affarssystemet_grp15
 {
     class Program
     {
