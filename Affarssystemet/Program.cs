@@ -12,6 +12,7 @@ namespace Affarssystemet_grp15
         {
             Console.WriteLine("Hello!");
             Console.WriteLine("Hej"); //Simonlidm
+            Console.WriteLine("Hej alla"); // Tobias Borg
         }
     }
 }
