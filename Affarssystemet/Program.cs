@@ -46,11 +46,18 @@ namespace Affarssystemet
             rows.Add(ordRow2);
 
             // Creates a sample order and adds it to the list in Shop
-            Order ord1 = new Order(322, cust1, rows);
-            shop.OrderAddProduct(ord1);
+            Order ord1 = new Order(shop.OrderGetNextNumber(), cust1, rows);
+            bool test = shop.OrderAdd(ord1);
+            if (test)
+                Console.WriteLine("Toppen!");
 
             // Prints the order
             Console.WriteLine(ord1);
+
+            if (shop.OrderGetByNumber(322) != null)
+                Console.WriteLine("Tummen upp!");
+            else
+                Console.WriteLine("Tummen ner!");
 
             // test console read line
             Console.ReadLine();
