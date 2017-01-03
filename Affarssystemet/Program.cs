@@ -52,6 +52,7 @@ namespace Affarssystemet
             // Prints the order
             Console.WriteLine(ord1);
 
+            // test console read line
             Console.ReadLine();
             
         }
