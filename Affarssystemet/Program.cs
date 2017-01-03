@@ -10,9 +10,7 @@ namespace Affarssystemet
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello!");
-            Console.WriteLine("Hej"); //Simonlidm
-            Console.WriteLine("Hejhej"); //Thomas
+           
         }
     }
 }

@@ -6,7 +6,27 @@ using System.Threading.Tasks;
 
 namespace Affarssystemet
 {
-    class Product
+  abstract class Product
     {
+    }
+
+    class  Computer : Product
+    {
+        
+    }
+
+    class  Printer : Product
+    {
+        
+    }
+
+    class ComputerDisplay : Product
+    {
+        
+    }
+
+    class Telephone : Product
+    {
+        
     }
 }
