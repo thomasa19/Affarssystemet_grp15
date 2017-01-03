@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Affarssystemet
 {
-    class Customer
-    {
+    //class Customer
+    //{
 
-    }
+    //}
 
-    /*
+    
     class Customer
     {
         public int customerNumberTA { get; private set; }
@@ -32,5 +32,5 @@ namespace Affarssystemet
                    "Adress:     " + customerAddressTA + "\n";
         }
     }
-    */
+    
 }
