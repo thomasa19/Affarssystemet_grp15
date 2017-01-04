@@ -8,11 +8,31 @@ namespace Affarssystemet
 {
     class Program
     {
+        // Creates the shop. Placed here to be accessible by menu method.
+        private static Shop shop = new Shop();
+
         static void Main(string[] args)
         {
-            
-            // Creates the shop
-            Shop shop = new Shop();
+            int menuAlternative;
+            bool runAgain = true;
+
+            // Loop for showing the menu. When 0 the loop exits.
+            while (runAgain)
+            {
+                Console.Clear();
+                Console.WriteLine(PrintMenu());
+                Console.Write("Välj vad du vill göra: ");
+
+                // Controls if input is an integer if not it defaults to 99.
+                if (int.TryParse(Console.ReadLine(), out menuAlternative))
+                {
+                    MenuChoice(out runAgain, menuAlternative);
+                }
+                else
+                {
+                    MenuChoice(out runAgain, 99);
+                }
+            }
 
             // Creates a couple of sample customers
             Customer cust1 = new Customer(123, "Thomas Arnqvist", "Uppsala");
@@ -61,7 +81,85 @@ namespace Affarssystemet
 
             // test console read line
             Console.ReadLine();
-            
+        }
+
+        /* The functionality for the menu.
+         */
+        public static void MenuChoice(out bool runAgain, int menuAlternative)
+        {
+            runAgain = true; // Needs to be set for return, false only for exit alternative (0).
+
+            switch (menuAlternative)
+            {
+                case 1:
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+                case 2:
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+                case 3:
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+                case 4:
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+                case 5:
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+                case 6:
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+                case 7:
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+                case 0:
+                    // End and exit the program
+                    runAgain = false;
+                    break;
+                default:
+                    // In case of nothing else
+                    Console.WriteLine("");
+                    Console.WriteLine("Det alternativet finns inte.");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+            }
+        }
+
+        /* Shows the menu.
+         */
+        public static string PrintMenu()
+        {
+            return "Meny för affären:\n" +
+                   "1. Lägg till produkt\n" +
+                   "2. Ändra produkt\n" +
+                   "3. Lägg till kund\n" +
+                   "4. Lägg till order\n" +
+                   "5. Ändra order\n" +
+                   "6. Ta bort order\n" +
+                   "7. Visa order för kund(nummer)\n" +
+                   "0. Avsluta\n";
         }
     }
 }

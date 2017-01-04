@@ -12,6 +12,8 @@ namespace Affarssystemet
         private List<Customer> shopCustomers;
         private List<Product> shopProducts;
 
+        /* Constructor creating the various lists used by the shop.
+         */
         public Shop()
         {
             shopOrders = new List<Order>();
@@ -19,6 +21,9 @@ namespace Affarssystemet
             shopProducts = new List<Product>();
         }
 
+        /* Adds a new order, returns true if successful otherwise false.
+         * Checks that the ordernumber is not taken.
+         */
         public bool OrderAdd(Order item)
         {
             bool success = false;
@@ -36,6 +41,8 @@ namespace Affarssystemet
             return success;
         }
 
+        /* Find an order by ordernumber. Returns found order otherwise null.
+         */
         public Order OrderGetByNumber(int orderNo)
         {
             try
@@ -48,11 +55,14 @@ namespace Affarssystemet
             }                
         }
 
+        /* Find all order for a customer by customernumber. Returns a list of orders otherwise null.
+         * This one is a jump ahead and should await 'til one of us picks the card.
+         */
         public List<Order> OrderGetByCustomerNumber(int custNo)
         {
             try
             {
-                return null; //shopOrders. (x => x.customer.customerNumberTA == custNo);
+                return null;
             }
             catch (InvalidOperationException)
             {
@@ -60,6 +70,9 @@ namespace Affarssystemet
             }
         }
 
+        /* Find out the next available ordernumber. Returns next number if the shops
+         * orderlist is empty it returns the first number, 301.
+         */
         public int OrderGetNextNumber()
         {
             int returnNumber = 0;
@@ -75,11 +88,17 @@ namespace Affarssystemet
             return returnNumber;
         }
 
+        /* Adds a new customer. Not complete, no checks are done.
+         * Needed for creating orders.
+         */
         public void CustomersAddCustomer(Customer item)
         {
             shopCustomers.Add(item);
         }
 
+        /* Adds a new product. Not complete, no checks are done.
+         * Needed for creating orders.
+         */
         public void ProductsAddProduct(Product item)
         {
             shopProducts.Add(item);

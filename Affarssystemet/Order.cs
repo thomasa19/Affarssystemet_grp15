@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Affarssystemet
 {
+    /* Represents the order made by a certain customer.
+     * Uses class OrderRow to control the various products.
+     */
     class Order
     {
         public int orderNumber { get; private set; }
@@ -21,6 +24,7 @@ namespace Affarssystemet
 
         public override string ToString()
         {
+            decimal orderSum = 0m;
             string returnStr = "";
             returnStr += "Ordernummer: " + orderNumber + "\n" +
                          "Kund:        " + customer.customerNameTA + "\n" +
@@ -29,12 +33,18 @@ namespace Affarssystemet
             foreach (var item in orderRows)
             {
                 returnStr += item.ToString();
+                orderSum += item.product.productPriceTA * item.numberOf;
             }
-            // Lägga till för ordersumma...
+
+            returnStr += "Att betala: " + orderSum.ToString("C") + "\n";
+
             return returnStr;
         }
     }
 
+    /* Represents a row in an order.
+     * Used by class Order to control the various products in an order.
+     */
     class OrderRow
     {
         public Product product { get; private set; }
@@ -48,7 +58,7 @@ namespace Affarssystemet
 
         public override string ToString()
         {
-            return product.productNameTA + ", " + numberOf.ToString() + " st\n";
+            return product.productNameTA + ", " + numberOf.ToString() + " st á " + product.productPriceTA.ToString("C") + "\n";
         }
     }
 }
