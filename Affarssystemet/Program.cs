@@ -104,11 +104,19 @@ namespace Affarssystemet
                 
             else
                 Console.WriteLine("Tummen ner!");
-            
 
-            // test console read line
+            // Delete order by ordernumber
+            //Order delOrder = new Order(100, cust1, rows);
+            Order delOrder = ord2;
+            if (shop.DeleteOrder(delOrder.orderNumber))
+                Console.WriteLine("Ordernr " + delOrder.orderNumber + " borttagen.");
+            else
+                Console.WriteLine("Ingen order borttagen");
+
             Console.ReadLine();
         }
+
+
 
         /* The functionality for the menu.
          */

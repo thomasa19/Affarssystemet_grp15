@@ -79,6 +79,7 @@ namespace Affarssystemet
             {
                 return null;
             }
+
         }
 
         /* Find out the next available ordernumber. Returns next number if the shops
@@ -113,5 +114,43 @@ namespace Affarssystemet
         {
             shopProducts.Add(item);
         }
+        
+        /* Deletes an order from shopOrder by Ordernumber.
+         * 
+         */
+        public bool DeleteOrder(int orderNumber)
+        {
+            try
+            {
+                foreach (var item in shopOrders)
+                {
+                    if (item.orderNumber == orderNumber)
+                    {
+                        shopOrders.Remove(item);
+                        return true;
+                    }                        
+                }
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+
+                return false;
+            }
+
+            /*if (shopOrders.Any(x => x.orderNumber == order.orderNumber))
+                return true;*/
+
+            // Check if order has been removed
+            foreach (var item in shopOrders )
+            {
+                Console.WriteLine("Order nr: " + item.orderNumber);
+            }
+
+
+        }
+
+
+
     }
 }
