@@ -147,17 +147,6 @@ namespace Affarssystemet
 
                 return false;
             }
-
-            /*if (shopOrders.Any(x => x.orderNumber == order.orderNumber))
-                return true;*/
-
-            // Check if order has been removed
-            foreach (var item in shopOrders )
-            {
-                Console.WriteLine("Order nr: " + item.orderNumber);
-            }
-
-
         }
 
 
