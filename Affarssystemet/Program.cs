@@ -69,7 +69,7 @@ namespace Affarssystemet
             Order ord1 = new Order(shop.OrderGetNextNumber(), cust1, rows);
             bool test = shop.OrderAdd(ord1);
             if (test)
-               Console.WriteLine("Toppen!");
+               Console.WriteLine("Första ordern registrerad\n");
 
             // Prints the order
             //Console.WriteLine(ord1);
@@ -79,22 +79,22 @@ namespace Affarssystemet
 
             test = shop.OrderAdd(ord2);
             if (test)
-                Console.WriteLine("Toppen");
+                Console.WriteLine("Andra ordern registrerad\n");
 
             // Prints the orders
             //Console.WriteLine(ord2);
 
-            if (shop.OrderGetByNumber(301) != null)
-                Console.WriteLine("Tummen upp!");
+            if (shop.OrderGetByNumber(303) != null)
+                Console.WriteLine("Tummen upp! Ordern finns\n");
             else
-                Console.WriteLine("Tummen ner!");
+                Console.WriteLine("Tummen ner! Ordern saknas\n");
                            
             List<Order> customerOrders = new List<Order>();
             customerOrders = shop.OrderGetByCustomerNumber(123);
 
             if (customerOrders != null)
             {
-                Console.WriteLine("Tummen upp!");
+                Console.WriteLine("Kunden har beställt:");
 
                 foreach (var item in customerOrders)
                 {

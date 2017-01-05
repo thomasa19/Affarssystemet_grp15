@@ -82,18 +82,26 @@ namespace Affarssystemet
 
         }
 
-        /* Find out the next available ordernumber. Returns next number if the shops
-         * orderlist is empty it returns the first number, 301.
+        /* Find out the next available ordernumber. Returns next number. If the shops
+         * orderlist is empty it returns the first number, the default sequense starts with 301.
          */
         public int OrderGetNextNumber()
         {
             int returnNumber = 0;
 
             if (shopOrders.Count == 0)
-                returnNumber = 301;
+                returnNumber = 301;  // If shops order list is empty, return first number in default sequense.
             else
-            {                
-                returnNumber += 1;                
+            {
+                for (int i = 0; i < shopOrders.Count; i++)
+                {
+                    // Finds the highest ordernumber taken. Needed when orders are removed.
+                    if (shopOrders[i].orderNumber > returnNumber)
+                    {
+                        returnNumber = shopOrders[i].orderNumber;  
+                    }
+                }
+                returnNumber += 1;  // +1 to the highest taken ordernumber       
             }
 
             return returnNumber;
