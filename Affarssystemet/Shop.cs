@@ -8,9 +8,9 @@ namespace Affarssystemet
 {
     class Shop
     {
-        private List<Order> shopOrders;
-        private List<Customer> shopCustomers;
-        private List<Product> shopProducts;
+        private List<Order> shopOrders; // List of orders in the shop
+        private List<Customer> shopCustomers; // List of customers in the shop
+        private List<Product> shopProducts; // List of products in the shop
 
         /* Constructor creating the various lists used by the shop.
          */
@@ -55,14 +55,25 @@ namespace Affarssystemet
             }                
         }
 
-        /* Find all order for a customer by customernumber. Returns a list of orders otherwise null.
-         * This one is a jump ahead and should await 'til one of us picks the card.
-         */
+        // Find all order for a customer by customernumber. Returns a list of orders otherwise null.         
+         
         public List<Order> OrderGetByCustomerNumber(int custNo)
         {
             try
             {
-                return null;
+                List<Order> customerOrders = new List<Order>();
+                foreach (var order in shopOrders)
+                {
+                    if (order.customer.customerNumberTA == custNo)
+                    {                        
+                        customerOrders.Add(order);
+                    }                    
+                }                              
+
+                if (customerOrders.Any())
+                    return customerOrders;
+                else
+                    return null; 
             }
             catch (InvalidOperationException)
             {
@@ -80,9 +91,8 @@ namespace Affarssystemet
             if (shopOrders.Count == 0)
                 returnNumber = 301;
             else
-            {
-                int lastNumber = shopOrders.Max(x => x.orderNumber);
-                returnNumber += 1;
+            {                
+                returnNumber += 1;                
             }
 
             return returnNumber;

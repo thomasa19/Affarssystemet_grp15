@@ -69,15 +69,42 @@ namespace Affarssystemet
             Order ord1 = new Order(shop.OrderGetNextNumber(), cust1, rows);
             bool test = shop.OrderAdd(ord1);
             if (test)
-                Console.WriteLine("Toppen!");
+               Console.WriteLine("Toppen!");
 
             // Prints the order
-            Console.WriteLine(ord1);
+            //Console.WriteLine(ord1);
+            
+            // Create second sample order with same customer and adds it to the list in Shop
+            Order ord2 = new Order(shop.OrderGetNextNumber(), cust1, rows);
 
-            if (shop.OrderGetByNumber(322) != null)
+            test = shop.OrderAdd(ord2);
+            if (test)
+                Console.WriteLine("Toppen");
+
+            // Prints the orders
+            //Console.WriteLine(ord2);
+
+            if (shop.OrderGetByNumber(301) != null)
                 Console.WriteLine("Tummen upp!");
             else
                 Console.WriteLine("Tummen ner!");
+                           
+            List<Order> customerOrders = new List<Order>();
+            customerOrders = shop.OrderGetByCustomerNumber(123);
+
+            if (customerOrders != null)
+            {
+                Console.WriteLine("Tummen upp!");
+
+                foreach (var item in customerOrders)
+                {
+                    Console.WriteLine(item.ToString() +"\n");
+                }                
+            }
+                
+            else
+                Console.WriteLine("Tummen ner!");
+            
 
             // test console read line
             Console.ReadLine();
