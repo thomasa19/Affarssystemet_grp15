@@ -91,7 +91,14 @@ namespace Affarssystemet
             if (shopOrders.Count == 0)
                 returnNumber = 301;
             else
-            {                
+            {
+                for (int i = 0; i < shopOrders.Count; i++)
+                {
+                    if (shopOrders[i].orderNumber > returnNumber)
+                    {
+                        returnNumber = shopOrders[i].orderNumber;
+                    }
+                }
                 returnNumber += 1;                
             }
 
