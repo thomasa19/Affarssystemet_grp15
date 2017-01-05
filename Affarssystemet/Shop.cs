@@ -45,18 +45,20 @@ namespace Affarssystemet
          */
         public Order OrderGetByNumber(int orderNo)
         {
-            try
+            Order findOrder = null;  // Defaults return to null.
+
+            for (int i = 0; i < shopOrders.Count; i++)
             {
-                return shopOrders.Single(x => x.orderNumber == orderNo);
+                // Find the order that equals the argument and if found it is returned.
+                if (shopOrders[i].orderNumber == orderNo)
+                    findOrder = shopOrders[i];
             }
-            catch (InvalidOperationException)
-            {
-                return null;
-            }                
+
+            return findOrder;
         }
 
         // Find all order for a customer by customernumber. Returns a list of orders otherwise null.         
-         
+
         public List<Order> OrderGetByCustomerNumber(int custNo)
         {
             try
