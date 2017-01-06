@@ -46,6 +46,25 @@ namespace Affarssystemet
             productsInStorageTA = prodInStorage;
         }
 
+        /* This method updates the number of products in storage.
+         * If number of products is decrease a negative integer is passed as argument
+         * and if number of products is increased a positive integer is passed as argument.
+         */
+        public void updateProdInStorage(int updateProdInStorage)
+        {
+            try
+            {
+                productsInStorageTA += updateProdInStorage;                
+            }
+            catch (InvalidOperationException)
+            {
+                // do something?
+            }
+        }
+
+
+
+
         public override string ToString()
         {
             return "Artikelnummer: " + productNumberTA + "\n" +

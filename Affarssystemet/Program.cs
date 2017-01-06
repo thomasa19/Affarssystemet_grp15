@@ -105,8 +105,7 @@ namespace Affarssystemet
             else
                 Console.WriteLine("Tummen ner!");
 
-            // Delete order by ordernumber
-            //Order delOrder = new Order(100, cust1, rows);
+            // Delete order by ordernumber           
             Order delOrder = ord2;
             if (shop.DeleteOrder(delOrder.orderNumber))
                 Console.WriteLine("Ordernr " + delOrder.orderNumber + " borttagen.");
@@ -114,9 +113,11 @@ namespace Affarssystemet
                 Console.WriteLine("Ingen order borttagen");
 
             Console.ReadLine();
+
+            
         }
 
-
+        
 
         /* The functionality for the menu.
          */

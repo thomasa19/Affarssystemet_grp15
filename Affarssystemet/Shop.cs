@@ -126,17 +126,31 @@ namespace Affarssystemet
         }
         
         /* Deletes an order from shopOrder by Ordernumber.
-         * 
+         * Returns true if order found and deleted.
+         * Returns false if order not found our exception thrown.
          */
         public bool DeleteOrder(int orderNumber)
         {
             try
             {
-                foreach (var item in shopOrders)
+                foreach (var order in shopOrders)
                 {
-                    if (item.orderNumber == orderNumber)
+                    if (order.orderNumber == orderNumber)
                     {
-                        shopOrders.Remove(item);
+                        foreach (var item  in order.orderRows)
+                        {
+                            foreach (var product in shopProducts)
+                            {
+                                if (item.product == product)
+                                {
+                                    product.updateProdInStorage((-1) * item.numberOf);
+                                    Console.WriteLine("Nytt antal " + product.productNameTA + " i lager: "+ product.productsInStorageTA);
+                                }
+                                
+                            }                           
+                        }                        
+                        shopOrders.Remove(order);        
+
                         return true;
                     }                        
                 }
@@ -144,7 +158,6 @@ namespace Affarssystemet
             }
             catch (InvalidOperationException)
             {
-
                 return false;
             }
         }
