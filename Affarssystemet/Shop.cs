@@ -66,7 +66,7 @@ namespace Affarssystemet
                 List<Order> customerOrders = new List<Order>();
                 foreach (var order in shopOrders)
                 {
-                    if (order.customer.customerNumberTA == custNo)
+                    if (order.customer.customerNumber == custNo)
                     {                        
                         customerOrders.Add(order);
                     }                    
@@ -124,9 +124,9 @@ namespace Affarssystemet
                 for (int i = 0; i < shopCustomers.Count; i++)
                 {
                     // Finds the highest Customernumber taken. Needed if customers are removed.
-                    if (shopCustomers[i].customerNumberTA > returnNumber)
+                    if (shopCustomers[i].customerNumber > returnNumber)
                     {
-                        returnNumber = shopCustomers[i].customerNumberTA;
+                        returnNumber = shopCustomers[i].customerNumber;
                     }
                 }
                 returnNumber += 1;  // +1 to the highest taken customernumber       
@@ -141,7 +141,7 @@ namespace Affarssystemet
         public bool CustomersAddCustomer(Customer item)
         {
 
-            if (CustomerGetByNumber(item.customerNumberTA) != null)
+            if (CustomerGetByNumber(item.customerNumber) != null)
             {
                 Console.WriteLine("Kunden finns redan, välj annat kundnummer");
                 return false;
@@ -163,7 +163,7 @@ namespace Affarssystemet
             for (int i = 0; i < shopCustomers.Count; i++)
             {
                 // Find the customer that equals the argument and if found it is returned.
-                if (shopCustomers[i].customerNumberTA == customerNo)
+                if (shopCustomers[i].customerNumber == customerNo)
                     findCustomer = shopCustomers[i];
             }
             return findCustomer;
@@ -198,7 +198,7 @@ namespace Affarssystemet
                                 if (item.product == product)
                                 {
                                     product.updateProdInStorage(item.numberOf);
-                                    Console.WriteLine("Nytt antal " + product.productNameTA + " i lager: "+ product.productsInStorageTA);
+                                    Console.WriteLine("Nytt antal " + product.productName + " i lager: "+ product.productsInStorage);
                                 }
                                 
                             }                           

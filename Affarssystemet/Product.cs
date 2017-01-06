@@ -5,45 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Affarssystemet
-{
-  //abstract class Product
-  //  {
-  //  }
-
-  //  class  Computer : Product
-  //  {
-        
-  //  }
-
-  //  class  Printer : Product
-  //  {
-        
-  //  }
-
-  //  class ComputerDisplay : Product
-  //  {
-        
-  //  }
-
-  //  class Telephone : Product
-  //  {
-        
-  //  }
-
-    
+{    
     class Product
     {
-        public int productNumberTA { get; private set; }
-        public string productNameTA { get; private set; }
-        public decimal productPriceTA { get; private set; }
-        public int productsInStorageTA { get; private set; }
+        public int productNumber { get; private set; }
+        public string productName { get; private set; }
+        public decimal productPrice { get; private set; }
+        public int productsInStorage { get; private set; }
 
         public Product(int prodNo, string prodName, decimal prodPrice, int prodInStorage)
         {
-            productNumberTA = prodNo;
-            productNameTA = prodName;
-            productPriceTA = prodPrice;
-            productsInStorageTA = prodInStorage;
+            productNumber = prodNo;
+            productName = prodName;
+            productPrice = prodPrice;
+            productsInStorage = prodInStorage;
         }
 
         /* This method updates the number of products in storage.
@@ -54,7 +29,7 @@ namespace Affarssystemet
         {
             try
             {
-                productsInStorageTA += updateProdInStorage;                
+                productsInStorage += updateProdInStorage;                
             }
             catch (InvalidOperationException)
             {
@@ -62,15 +37,12 @@ namespace Affarssystemet
             }
         }
 
-
-
-
         public override string ToString()
         {
-            return "Artikelnummer: " + productNumberTA + "\n" +
-                   "Benämning:     " + productNameTA + "\n" +
-                   "Pris:          " + productPriceTA.ToString("C") + "\n" +
-                   "Antal i lager: " + productsInStorageTA + "\n";
+            return "Artikelnummer: " + productNumber + "\n" +
+                   "Benämning:     " + productName + "\n" +
+                   "Pris:          " + productPrice.ToString("C") + "\n" +
+                   "Antal i lager: " + productsInStorage + "\n";
         }
     }
     

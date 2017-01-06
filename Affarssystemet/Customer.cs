@@ -5,31 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Affarssystemet
-{
-    //class Customer
-    //{
-
-    //}
-
-    
+{    
     class Customer
     {
-        public int customerNumberTA { get; private set; }
-        public string customerNameTA { get; private set; }
-        public string customerAddressTA { get; private set; }
+        public int customerNumber { get; private set; }
+        public string customerName { get; private set; }
+        public string customerAddress { get; private set; }
 
         public Customer(int custNo, string custName, string custAddress)
         {
-            customerNumberTA = custNo;
-            customerNameTA = custName;
-            customerAddressTA = custAddress;
+            customerNumber = custNo;
+            customerName = custName;
+            customerAddress = custAddress;
         }
 
         public override string ToString()
         {
-            return "Kundnummer: " + customerNumberTA + "\n" +
-                   "Namn:       " + customerNameTA + "\n" +
-                   "Adress:     " + customerAddressTA + "\n";
+            return "Kundnummer: " + customerNumber + "\n" +
+                   "Namn:       " + customerName + "\n" +
+                   "Adress:     " + customerAddress + "\n";
         }
     }
     
