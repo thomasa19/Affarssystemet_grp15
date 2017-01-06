@@ -47,7 +47,7 @@ namespace Affarssystemet
         }
 
         /* This method updates the number of products in storage.
-         * If number of products is decrease a negative integer is passed as argument
+         * If number of products is decreased a negative integer is passed as argument
          * and if number of products is increased a positive integer is passed as argument.
          */
         public void updateProdInStorage(int updateProdInStorage)

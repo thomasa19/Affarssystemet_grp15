@@ -179,6 +179,7 @@ namespace Affarssystemet
         }
         
         /* Deletes an order from shopOrder by Ordernumber.
+         * Returns the number of products in order by adding the products to shopProducts.
          * Returns true if order found and deleted.
          * Returns false if order not found our exception thrown.
          */
@@ -196,7 +197,7 @@ namespace Affarssystemet
                             {
                                 if (item.product == product)
                                 {
-                                    product.updateProdInStorage((-1) * item.numberOf);
+                                    product.updateProdInStorage(item.numberOf);
                                     Console.WriteLine("Nytt antal " + product.productNameTA + " i lager: "+ product.productsInStorageTA);
                                 }
                                 
