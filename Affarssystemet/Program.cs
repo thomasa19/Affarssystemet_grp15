@@ -34,12 +34,24 @@ namespace Affarssystemet
                 }
             }
 
-            // Creates a couple of sample customers
-            Customer cust1 = new Customer(123, "Thomas Arnqvist", "Uppsala");
-            Customer cust2 = new Customer(124, "Karl Larsson", "Uppsala");
-            // Adds customers to the list in Shop
-            shop.CustomersAddCustomer(cust1);
-            shop.CustomersAddCustomer(cust2);
+            // Creates sample customers and add to the list in Shop
+            Customer cust1 = new Customer(shop.CustomerGetNextNumber(), "Thomas Arnqvist", "Uppsala");
+            bool success = shop.CustomersAddCustomer(cust1);
+            if (success)
+                Console.WriteLine("Kund tillagd, happy..");
+
+            // test fel typ av kund
+            Customer cust3 = new Customer(123, "Thomas Arnqvist", "Uppsala");
+            success = shop.CustomersAddCustomer(cust1);
+            if (success)
+                Console.WriteLine("Kund tillagd, happy..");
+            else
+                Console.WriteLine("Kundnr krock");
+            
+            Customer cust2 = new Customer(shop.CustomerGetNextNumber(), "Karl Larsson", "Uppsala");          
+            success = shop.CustomersAddCustomer(cust2);
+            if (success)
+                Console.WriteLine("En till Kund tillagd, happy..");
 
             // Prints the customers
             Console.WriteLine(cust1.ToString());
@@ -100,8 +112,7 @@ namespace Affarssystemet
                 {
                     Console.WriteLine(item.ToString() +"\n");
                 }                
-            }
-                
+            }                
             else
                 Console.WriteLine("Tummen ner!");
 
@@ -112,12 +123,9 @@ namespace Affarssystemet
             else
                 Console.WriteLine("Ingen order borttagen");
 
-            Console.ReadLine();
-
-            
+            Console.ReadLine();            
         }
-
-        
+               
 
         /* The functionality for the menu.
          */

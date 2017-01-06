@@ -109,13 +109,66 @@ namespace Affarssystemet
             return returnNumber;
         }
 
+
+        /* Find out the next available customernumber. Returns next number. If the shops
+         * customerlist is empty it returns the first number, the default sequense starts with 101.
+         */
+        public int CustomerGetNextNumber()
+        {
+            int returnNumber = 0;
+
+            if (shopCustomers.Count == 0)
+                returnNumber = 101;  // If shops order list is empty, return first number in default sequense.
+            else
+            {
+                for (int i = 0; i < shopCustomers.Count; i++)
+                {
+                    // Finds the highest Customernumber taken. Needed if customers are removed.
+                    if (shopCustomers[i].customerNumberTA > returnNumber)
+                    {
+                        returnNumber = shopCustomers[i].customerNumberTA;
+                    }
+                }
+                returnNumber += 1;  // +1 to the highest taken customernumber       
+            }
+
+            return returnNumber;
+        }
+        
         /* Adds a new customer. Not complete, no checks are done.
          * Needed for creating orders.
          */
-        public void CustomersAddCustomer(Customer item)
+        public bool CustomersAddCustomer(Customer item)
         {
-            shopCustomers.Add(item);
+
+            if (CustomerGetByNumber(item.customerNumberTA) != null)
+            {
+                Console.WriteLine("Kunden finns redan, välj annat kundnummer");
+                return false;
+            }
+            else
+            {                
+                shopCustomers.Add(item);
+                return true;
+            }
+                
         }
+
+        /* Find a customer by customer number. Returns found customer otherwise null.
+        */
+        public Customer CustomerGetByNumber(int customerNo)
+        {
+            Customer findCustomer = null;  // Defaults return to null.
+
+            for (int i = 0; i < shopCustomers.Count; i++)
+            {
+                // Find the customer that equals the argument and if found it is returned.
+                if (shopCustomers[i].customerNumberTA == customerNo)
+                    findCustomer = shopCustomers[i];
+            }
+            return findCustomer;
+        }
+        
 
         /* Adds a new product. Not complete, no checks are done.
          * Needed for creating orders.
