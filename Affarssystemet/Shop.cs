@@ -34,8 +34,20 @@ namespace Affarssystemet
             }
             else
             {
-                shopOrders.Add(item);
-                success = true;
+                // Update storage for each product in orderrows.
+                foreach (OrderRow part in item.orderRows)
+                {
+                    foreach (Product product in shopProducts)
+                    {
+                        if (part.product == product)
+                        {
+                            product.updateProdInStorage(-(part.numberOf));
+                        }
+                    }
+                    // Add the order to the orders list.
+                    shopOrders.Add(item);
+                    success = true;
+                }
             }
 
             return success;
