@@ -13,6 +13,8 @@ namespace Affarssystemet
         public decimal productPrice { get; private set; }
         public int productsInStorage { get; private set; }
 
+       
+
         public Product(int prodNo, string prodName, decimal prodPrice, int prodInStorage)
         {
             productNumber = prodNo;

@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Affarssystemet
 {
+   
     class Program
     {
         // Creates the shop. Placed here to be accessible by menu method.
         private static Shop shop = new Shop();
-
+        
         static void Main(string[] args)
         {
             int menuAlternative;
             bool runAgain = true;
+           
 
             // Loop for showing the menu. When 0 the loop exits.
             while (runAgain)
@@ -22,7 +25,8 @@ namespace Affarssystemet
                 Console.Clear();
                 Console.WriteLine(PrintMenu());
                 Console.Write("Välj vad du vill göra: ");
-
+                           
+              
                 // Controls if input is an integer if not it defaults to 99.
                 if (int.TryParse(Console.ReadLine(), out menuAlternative))
                 {
@@ -132,14 +136,107 @@ namespace Affarssystemet
         public static void MenuChoice(out bool runAgain, int menuAlternative)
         {
             runAgain = true; // Needs to be set for return, false only for exit alternative (0).
-
+         
             switch (menuAlternative)
             {
                 case 1:
+                    Console.WriteLine(
+                   "1. Lägg till en Dator\n" +
+                   "2. Lägg till en Skrivare\n" +
+                   "3. Lägg till en Telefon\n" +
+                   "4. Lägg till en Datorskärm\n");
+              
+                    int menuSelection = 0;
+                    
 
-                    Console.WriteLine("");
-                    Console.WriteLine("Tryck enter för att fortsätta.");
-                    Console.ReadLine();
+                    try
+                    {
+                        menuSelection = int.Parse(Console.ReadLine()); //Input of the menuchoices.
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Ett fel inträffade!");
+                        Console.WriteLine("Tryck valfri knapp för att komma till huvudmenyn.");
+                        Console.ReadLine();
+                    }
+
+                    switch (menuSelection)
+                    {
+                        case 1:
+                          //If CountProductCreating1 is beyond 0 product will not be created
+                            if (shop.CountProductCreation1 == 0)
+                            {
+                                Product computer = new Product(shop.ProductGetNextNumber(), "Dator", 4999m, 70);
+                                shop.ProductsAddProduct(computer);
+                                Console.WriteLine("Produkten är nu registrerad");
+                                    Console.WriteLine(computer.ToString());
+                                shop.CountProductCreation1++; 
+                            }
+                            else
+                            {
+                                Console.WriteLine("Produkten är redan registrerad");
+                            }
+                            
+                            Console.WriteLine("");
+                            Console.WriteLine("Tryck enter för att fortsätta.");
+                            Console.ReadLine();
+                            break;
+                        case 2:
+                            if (shop.CountProductCreation2 == 0)
+                                {
+                                Product printer = new Product(shop.ProductGetNextNumber(), "Skrivare", 2199m, 50);
+                                shop.ProductsAddProduct(printer);
+                                Console.WriteLine("Produkten är nu registrerad");
+                                Console.WriteLine(printer.ToString());
+                                shop.CountProductCreation2++;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Produkten är redan registrerad");
+                            }
+
+                            Console.WriteLine("");
+                            Console.WriteLine("Tryck enter för att fortsätta.");
+                            Console.ReadLine();
+                            break;
+                        case 3:                 
+                            if (shop.CountProductCreation3 == 0)
+                            {
+                                Product telepphone = new Product(shop.ProductGetNextNumber(), "Telefon", 3299, 50);
+                                shop.ProductsAddProduct(telepphone);
+                                Console.WriteLine("Produkten är nu registrerad");
+                                Console.WriteLine(telepphone.ToString());
+                                shop.CountProductCreation3++;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Produkten är redan registrerad");
+                            }
+                            Console.WriteLine("");
+                            Console.WriteLine("Tryck enter för att fortsätta.");
+                            Console.ReadLine();
+                            break;
+                        case 4:
+                            if (shop.CountProductCreation4 == 0)
+                            {
+                                Product computerScreen = new Product(shop.ProductGetNextNumber(), "Datorskärm", 999m, 50);
+                                shop.ProductsAddProduct(computerScreen);
+                                Console.WriteLine("Produkten är nu registrerad");
+                                Console.WriteLine(computerScreen.ToString());
+                                shop.CountProductCreation4++;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Produkten är redan registrerad");
+                            }
+                            Console.WriteLine("");
+                            Console.WriteLine("Tryck enter för att fortsätta.");
+                            Console.ReadLine();
+                            break;
+                        default:
+                            Console.WriteLine("Du måste välja något av nedanstående."); // Om användaren använder någonting annat än ovan tillgängliga alternativ.
+                            break;
+                    }
                     break;
                 case 2:
 

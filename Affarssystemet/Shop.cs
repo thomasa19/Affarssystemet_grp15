@@ -12,6 +12,12 @@ namespace Affarssystemet
         private List<Customer> shopCustomers; // List of customers in the shop
         private List<Product> shopProducts; // List of products in the shop
 
+
+        //Counts created products in menu. To prevent duplicate products being created.
+        public int CountProductCreation1 { get; set; }
+        public int CountProductCreation2 { get; set; }
+        public int CountProductCreation3 { get; set; }
+        public int CountProductCreation4 { get; set; }
         /* Constructor creating the various lists used by the shop.
          */
         public Shop()
@@ -130,7 +136,7 @@ namespace Affarssystemet
             int returnNumber = 0;
 
             if (shopCustomers.Count == 0)
-                returnNumber = 101;  // If shops order list is empty, return first number in default sequense.
+                returnNumber = 101;  // If shops customer list is empty, return first number in default sequense.
             else
             {
                 for (int i = 0; i < shopCustomers.Count; i++)
@@ -180,14 +186,61 @@ namespace Affarssystemet
             }
             return findCustomer;
         }
-        
 
-        /* Adds a new product. Not complete, no checks are done.
+        /* Find out the next available product number. Returns next number. If the shops
+      * productlist is empty it returns the first number, the default sequense starts with 201.
+      */
+        public int ProductGetNextNumber()
+        {
+            int returnNumber = 0;
+
+            if (shopProducts.Count == 0)
+                returnNumber = 201;  // If shops product list is empty, return first number in default sequense.
+            else
+            {
+                for (int i = 0; i < shopProducts.Count; i++)
+                {
+                    // Finds the highest Product number taken. Needed if products are removed.
+                    if (shopProducts[i].productNumber > returnNumber)
+                    {
+                        returnNumber = shopProducts[i].productNumber;
+                    }
+                }
+                returnNumber += 1;  // +1 to the highest taken product number       
+            }
+
+            return returnNumber;
+        }
+
+        /* Find a product by product number. Returns found product otherwise null.
+        */
+        public Product ProductGetByNumber(int productNo)
+        {
+            Product findProduct = null;  // Defaults return to null.
+
+            for (int i = 0; i < shopProducts.Count; i++)
+            {
+                // Find the product that equals the argument and if found it is returned.
+                if (shopProducts[i].productNumber == productNo)
+                    findProduct = shopProducts[i];
+            }
+            return findProduct;
+        }
+        /* Adds a new product.
          * Needed for creating orders.
          */
-        public void ProductsAddProduct(Product item)
+        public bool ProductsAddProduct(Product item)
         {
-            shopProducts.Add(item);
+            
+            if (ProductGetByNumber(item.productNumber) != null)
+            {
+                Console.WriteLine("Produkten finns redan, välj annat artikelnummer");
+                return false;
+            }
+           
+                shopProducts.Add(item);
+                return true;
+            
         }
         
         /* Deletes an order from shopOrder by Ordernumber.
@@ -227,8 +280,5 @@ namespace Affarssystemet
                 return false;
             }
         }
-
-
-
     }
 }
