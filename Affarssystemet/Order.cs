@@ -27,8 +27,8 @@ namespace Affarssystemet
             decimal orderSum = 0m;
             string returnStr = "";
             returnStr += "Ordernummer: " + orderNumber + "\n" +
-                         "Kund:        " + customer.customerName + "\n" +
-                         "Beställda produkter:\n";
+                         " Kund: " + customer.customerNumber + ", " + customer.customerName + "\n" +
+                         " Beställda produkter:\n";
 
             foreach (var item in orderRows)
             {
@@ -58,7 +58,7 @@ namespace Affarssystemet
 
         public override string ToString()
         {
-            return product.productName + ", " + numberOf.ToString() + " st á " + product.productPrice.ToString("C") + "\n";
+            return "  " + product.productNumber + ", " + product.productName + ", " + numberOf + " st á " + product.productPrice.ToString("C") + "\n";
         }
     }
 }

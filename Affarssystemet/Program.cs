@@ -256,66 +256,51 @@ namespace Affarssystemet
                     int customerNo = 0;
                     int productNo = 0;
                     int numberOf = 0;
-                    if (shop.ProductGetNextNumber() == 201)
+
+                    Console.Write("Ange kundnummer: ");
+                    while (!int.TryParse(Console.ReadLine(), out customerNo) || shop.CustomerGetByNumber(customerNo) == null)
+                        Console.Write("Du angav inte korrekt kundnr, försök igen: ");
+                    List<OrderRow> myNewOrder = new List<OrderRow>();
+
+                    ConsoleKeyInfo cki;
+                    do
                     {
-                        Console.WriteLine("Det finns inga produkter, du måste börja med att registrera några.");
+                        Console.Write("Ange produktnr: ");
+                        while (!int.TryParse(Console.ReadLine(), out productNo) || shop.ProductGetByNumber(productNo) == null || myNewOrder.Find(x => x.product.productNumber == productNo) != null)
+                            Console.Write("Du angav ett felaktigt produktnr eller har redan lagt till produkten, försök igen: ");
+
+                        Console.Write("Ange antal: ");
+                        //cki = Console.ReadKey(true);
+                        while (!int.TryParse(Console.ReadLine(), out numberOf))
+                            Console.Write("Du angav inte ett korrkt antal, försök igen: ");
+                        myNewOrder.Add(new OrderRow(shop.ProductGetByNumber(productNo), numberOf));
+
+                        Console.Write("Lägg till en rad till? (j/n)");
+                        cki = Console.ReadKey(false);  // show the key as you read it
+                        Console.WriteLine();
+                    } while (cki.Key == ConsoleKey.J);
+
+                    Console.WriteLine("Du håller på att skapa följande order:");
+                    Console.WriteLine("Ordernr: " + shop.OrderGetNextNumber());
+                    Console.WriteLine("Kund: " + customerNo + ", " + shop.CustomerGetByNumber(customerNo).customerName);
+                    Console.WriteLine("Produkter:");
+                    foreach (var item in myNewOrder)
+                    {
+                        Console.WriteLine(" " + item.product.productNumber + ", " + item.product.productName + ", " + item.numberOf + " st" +
+                            ((item.product.productsInStorage - item.numberOf < 0) ? "\n OBS att denna produkt restnoteras och leveransen försenas." : ""));
                     }
-                    else if (shop.CustomerGetNextNumber() == 101)
+
+                    Console.WriteLine("Spara order? (j/n)");
+                    Console.WriteLine();
+                    cki = Console.ReadKey(false);
+                    if (cki.Key == ConsoleKey.J)
                     {
-                        Console.WriteLine("Det finns inga kunder, du måste börja med att registrera några.");
+                        int saveOrderNo = shop.OrderGetNextNumber();
+                        shop.OrderAdd(new Order(saveOrderNo, shop.CustomerGetByNumber(customerNo), myNewOrder));
+                        Console.WriteLine("\nOrdern är sparad.\n" + shop.OrderGetByNumber(saveOrderNo).ToString());
                     }
                     else
-                    {
-                        Console.Write("Ange kundnummer: ");
-                        while (!int.TryParse(Console.ReadLine(), out customerNo) || shop.CustomerGetByNumber(customerNo) == null)
-                            Console.Write("Du angav inte korrekt kundnr, försök igen: ");
-                        ArrayList prodRow = new ArrayList();
-
-                        ConsoleKeyInfo cki;
-                        do
-                        {
-                            int[] myArr = new int[2];
-                            Console.Write("Ange produktnr: ");
-                            while (!int.TryParse(Console.ReadLine(), out productNo) || shop.ProductGetByNumber(productNo) == null)
-                                Console.Write("Du angav inte korrekt produktnr, försök igen: ");
-
-                            Console.Write("Ange antal: ");
-                            //cki = Console.ReadKey(true);
-                            while (!int.TryParse(Console.ReadLine(), out numberOf))
-                                Console.Write("Du angav inte ett korrkt antal, försök igen: ");
-                            myArr[0] = productNo;
-                            myArr[1] = numberOf;
-                            prodRow.Add(myArr);
-
-                            Console.Write("Lägg till en rad till? (j/n)");
-                            cki = Console.ReadKey(false);  // show the key as you read it
-                            Console.WriteLine();
-                        } while (cki.Key == ConsoleKey.J);
-
-                        Console.WriteLine("Du håller på att skapa följande order:");
-                        Console.WriteLine("Ordernr: " + shop.OrderGetNextNumber());
-                        Console.WriteLine("Kund: " + customerNo + ", " + shop.CustomerGetByNumber(customerNo).customerName);
-                        Console.WriteLine("Produkter:");
-                        foreach (int[] item in prodRow)
-                        {
-                            Console.WriteLine(" " + item[0] + ", " + shop.ProductGetByNumber(item[0]).productName + ", " + item[1] + " st" +
-                                ((shop.ProductGetByNumber(productNo).productsInStorage - numberOf < 0) ? "\n OBS att denna produkt restnoteras och leveransen försenas." : ""));
-                        }
-
-                        List<OrderRow> myNewOrder = new List<OrderRow>();
-                        Console.WriteLine("Spara order? (j/n)");
-                        cki = Console.ReadKey(false);
-                        if (cki.Key == ConsoleKey.J)
-                        {
-                            foreach (int[] item in prodRow)
-                            {
-                                myNewOrder.Add(new OrderRow(shop.ProductGetByNumber(item[0]), item[1]));
-                            }
-                            shop.OrderAdd(new Order(shop.OrderGetNextNumber(), shop.CustomerGetByNumber(customerNo), myNewOrder));
-                        }
-                        else
-                            Console.WriteLine("Ordern registrerades inte.");
-                    }
+                        Console.WriteLine("Ordern registrerades inte.");
 
                     Console.WriteLine("");
                     Console.WriteLine("Tryck enter för att fortsätta.");
