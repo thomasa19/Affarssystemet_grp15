@@ -10,8 +10,8 @@ namespace Affarssystemet
     {
         public int productNumber { get; private set; }
         public string productName { get; private set; }
-        public decimal productPrice { get; private set; }
-        public int productsInStorage { get; private set; }
+        public decimal productPrice { get; set; }
+        public int productsInStorage { get; set; }
 
        
 
@@ -29,14 +29,8 @@ namespace Affarssystemet
          */
         public void updateProdInStorage(int updateProdInStorage)
         {
-            try
-            {
-                productsInStorage += updateProdInStorage;                
-            }
-            catch (InvalidOperationException)
-            {
-                // do something?
-            }
+            productsInStorage += updateProdInStorage;                
+            
         }
 
         public override string ToString()

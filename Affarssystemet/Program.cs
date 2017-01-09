@@ -241,10 +241,55 @@ namespace Affarssystemet
                     break;
                 case 2:
 
-                    Console.WriteLine("");
+                    int choiceProduct=99, choice=99;
+                    Console.WriteLine("Ändra produkt\n");                    
+                    List<Product> productList = shop.productList();
+                    foreach (var item in productList)
+                    {
+                        Console.WriteLine(item);
+                    }
+
+                    Console.Write("\n\nVilken produkt vill du ändra (Ange artikelnummer) : ");
+
+                    // Controls if input is an integer if not it defaults to 99.
+                    if (int.TryParse(Console.ReadLine(), out choiceProduct))
+                    {
+                        if (shop.ProductGetByNumber(choiceProduct)!=null)
+                        {
+                            Console.WriteLine("Vill du ändra:\n" + 
+                                              "1. antal\n"+
+                                              "2. pris\n");
+
+                            if (int.TryParse(Console.ReadLine(), out choice))
+                            {
+                                if (choice == 1)
+                                {
+                                    Console.Write("Ge ett nytt antal:");
+                                    shop.ProductGetByNumber(choiceProduct).productsInStorage = Convert.ToInt32(Console.ReadLine()); // saknar felhantering av int                                    
+                                }
+                                if (choice == 2)
+                                {
+                                    Console.Write("Ge ett nytt pris:");
+                                    shop.ProductGetByNumber(choiceProduct).productPrice = Convert.ToInt32(Console.ReadLine()); // saknar felhantering av int                                    
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
+                            }
+                        }
+                        else                        
+                            Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
+                    }                   
+
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
                     break;
+
                 case 3:
                     Console.WriteLine("Lägg till en kund");
 

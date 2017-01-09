@@ -244,6 +244,12 @@ namespace Affarssystemet
                 return true;
             
         }
+
+        public List<Product> productList()
+        {
+            return shopProducts;
+        }
+
         
         /* Deletes an order from shopOrder by Ordernumber.
          * Returns the number of products in order by adding the products to shopProducts.
