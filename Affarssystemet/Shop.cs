@@ -12,6 +12,8 @@ namespace Affarssystemet
         private List<Customer> shopCustomers; // List of customers in the shop
         private List<Product> shopProducts; // List of products in the shop
 
+        private bool populated { get; set; } = false;  // For control when loading sample data
+
 
         //Counts created products in menu. To prevent duplicate products being created.
         public int CountProductCreation1 { get; set; }
@@ -279,6 +281,38 @@ namespace Affarssystemet
             {
                 return false;
             }
+        }
+
+        /* Adds a few customers and a couple of orders to start with.
+         */
+        public string PopulateShop()
+        {
+            if (!populated)
+            {
+                if (shopProducts.Count < 4)
+                {
+                    return "Det finns inte tillräckligt många produkter, du måste börja med att registrera fyra olika.";
+                }
+                else
+                {
+                    CustomersAddCustomer(new Customer(101, "Lars Larsson", "Strågatan 34, Billerud"));
+                    CustomersAddCustomer(new Customer(102, "Carina Persson", "Linsvägen 9, Östersund"));
+                    CustomersAddCustomer(new Customer(103, "Maria Johansson", "Sturegatan 99, Stockholm"));
+
+                    OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 3), new OrderRow(ProductGetByNumber(203), 3), new OrderRow(ProductGetByNumber(204), 5) }));
+                    OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(101), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 2), new OrderRow(ProductGetByNumber(202), 2) }));
+                    OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(204), 5) }));
+                    OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(102), new List<OrderRow>() { new OrderRow(ProductGetByNumber(202), 1) }));
+
+                    populated = true;
+
+                    return "Nu är: \n" +
+                           "- 3 kunder tillagda\n" +
+                           "- 4 order tillagda\n";
+                }
+            }
+            else
+                return "Exempeldata är redan inläst.";
         }
     }
 }

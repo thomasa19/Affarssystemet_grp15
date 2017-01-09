@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -251,6 +252,70 @@ namespace Affarssystemet
                     Console.ReadLine();
                     break;
                 case 4:
+                    // Add an order
+                    int customerNo = 0;
+                    int productNo = 0;
+                    int numberOf = 0;
+                    if (shop.ProductGetNextNumber() == 201)
+                    {
+                        Console.WriteLine("Det finns inga produkter, du måste börja med att registrera några.");
+                    }
+                    else if (shop.CustomerGetNextNumber() == 101)
+                    {
+                        Console.WriteLine("Det finns inga kunder, du måste börja med att registrera några.");
+                    }
+                    else
+                    {
+                        Console.Write("Ange kundnummer: ");
+                        while (!int.TryParse(Console.ReadLine(), out customerNo) || shop.CustomerGetByNumber(customerNo) == null)
+                            Console.Write("Du angav inte korrekt kundnr, försök igen: ");
+                        ArrayList prodRow = new ArrayList();
+
+                        ConsoleKeyInfo cki;
+                        do
+                        {
+                            int[] myArr = new int[2];
+                            Console.Write("Ange produktnr: ");
+                            while (!int.TryParse(Console.ReadLine(), out productNo) || shop.ProductGetByNumber(productNo) == null)
+                                Console.Write("Du angav inte korrekt produktnr, försök igen: ");
+
+                            Console.Write("Ange antal: ");
+                            //cki = Console.ReadKey(true);
+                            while (!int.TryParse(Console.ReadLine(), out numberOf))
+                                Console.Write("Du angav inte ett korrkt antal, försök igen: ");
+                            myArr[0] = productNo;
+                            myArr[1] = numberOf;
+                            prodRow.Add(myArr);
+
+                            Console.Write("Lägg till en rad till? (j/n)");
+                            cki = Console.ReadKey(false);  // show the key as you read it
+                            Console.WriteLine();
+                        } while (cki.Key == ConsoleKey.J);
+
+                        Console.WriteLine("Du håller på att skapa följande order:");
+                        Console.WriteLine("Ordernr: " + shop.OrderGetNextNumber());
+                        Console.WriteLine("Kund: " + customerNo + ", " + shop.CustomerGetByNumber(customerNo).customerName);
+                        Console.WriteLine("Produkter:");
+                        foreach (int[] item in prodRow)
+                        {
+                            Console.WriteLine(" " + item[0] + ", " + shop.ProductGetByNumber(item[0]).productName + ", " + item[1] + " st" +
+                                ((shop.ProductGetByNumber(productNo).productsInStorage - numberOf < 0) ? "\n OBS att denna produkt restnoteras och leveransen försenas." : ""));
+                        }
+
+                        List<OrderRow> myNewOrder = new List<OrderRow>();
+                        Console.WriteLine("Spara order? (j/n)");
+                        cki = Console.ReadKey(false);
+                        if (cki.Key == ConsoleKey.J)
+                        {
+                            foreach (int[] item in prodRow)
+                            {
+                                myNewOrder.Add(new OrderRow(shop.ProductGetByNumber(item[0]), item[1]));
+                            }
+                            shop.OrderAdd(new Order(shop.OrderGetNextNumber(), shop.CustomerGetByNumber(customerNo), myNewOrder));
+                        }
+                        else
+                            Console.WriteLine("Ordern registrerades inte.");
+                    }
 
                     Console.WriteLine("");
                     Console.WriteLine("Tryck enter för att fortsätta.");
@@ -269,6 +334,14 @@ namespace Affarssystemet
                     Console.ReadLine();
                     break;
                 case 7:
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+                case 9:
+                    // Populate some sample products and customers
+                    Console.WriteLine(shop.PopulateShop());
 
                     Console.WriteLine("");
                     Console.WriteLine("Tryck enter för att fortsätta.");
@@ -300,6 +373,7 @@ namespace Affarssystemet
                    "5. Ändra order\n" +
                    "6. Ta bort order\n" +
                    "7. Visa order för kund(nummer)\n" +
+                   "9. Läs in exempeldata\n" +
                    "0. Avsluta\n";
         }
     }
