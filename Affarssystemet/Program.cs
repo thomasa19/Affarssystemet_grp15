@@ -246,8 +246,20 @@ namespace Affarssystemet
                     Console.ReadLine();
                     break;
                 case 3:
+                    Console.WriteLine("Lägg till en kund");
 
-                    Console.WriteLine("");
+                    Console.Write("\nAnge kundnamn: ");
+                    string custName = Console.ReadLine();
+
+                    Console.Write("\nAnge kundadress: ");
+                    string custAddress = Console.ReadLine();
+
+                    Customer customer = new Customer(shop.CustomerGetNextNumber(), custName, custAddress);
+                    shop.CustomersAddCustomer(customer);
+
+                    Console.WriteLine("\nKund tillagd med nedan uppgifter:");
+                    Console.WriteLine(customer.ToString());
+                    
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
                     break;
