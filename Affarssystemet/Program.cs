@@ -270,7 +270,16 @@ namespace Affarssystemet
                                 if (choice == 2)
                                 {
                                     Console.Write("Ge ett nytt pris:");
-                                    shop.ProductGetByNumber(choiceProduct).productPrice = Convert.ToInt32(Console.ReadLine()); // saknar felhantering av int                                    
+                                    try
+                                    {
+                                        shop.ProductGetByNumber(choiceProduct).productPrice =
+                                            Convert.ToInt32(Console.ReadLine());
+                                                                                
+                                    }
+                                    catch
+                                    {
+                                        Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
+                                    }
                                 }
                             }
                             else
