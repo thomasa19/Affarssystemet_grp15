@@ -289,6 +289,25 @@ namespace Affarssystemet
             }
         }
 
+        /* Show all orders in shop.
+         */
+        public string ListAllOrders()
+        {
+            string returnStr = "";
+
+            if (shopOrders.Count != 0)
+            {
+                foreach (Order item in shopOrders)
+                {
+                    returnStr += item.ToString() + "\n";
+                }
+            }
+            else
+                returnStr += "Det saknas order.\n";
+
+            return returnStr;
+        }
+
         /* Adds a few customers and a couple of orders to start with.
          */
         public string PopulateShop()

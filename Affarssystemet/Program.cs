@@ -397,6 +397,14 @@ namespace Affarssystemet
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
                     break;
+                case 8:
+                    // Print all placed orders
+                    Console.WriteLine(shop.ListAllOrders().ToString());
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
                 case 9:
                     // Populate some sample products and customers
                     Console.WriteLine(shop.PopulateShop());
@@ -431,6 +439,7 @@ namespace Affarssystemet
                    "5. Ändra order\n" +
                    "6. Ta bort order\n" +
                    "7. Visa order för kund(nummer)\n" +
+                   "8. Visa alla order\n" +
                    "9. Läs in exempeldata\n" +
                    "0. Avsluta\n";
         }
