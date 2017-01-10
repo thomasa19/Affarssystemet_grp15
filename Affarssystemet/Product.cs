@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Affarssystemet
-{    
+{
+    /* Represents the products available in the store.
+     */
     class Product
     {
         public int productNumber { get; private set; }
@@ -13,24 +15,12 @@ namespace Affarssystemet
         public decimal productPrice { get; set; }
         public int productsInStorage { get; set; }
 
-       
-
         public Product(int prodNo, string prodName, decimal prodPrice, int prodInStorage)
         {
             productNumber = prodNo;
             productName = prodName;
             productPrice = prodPrice;
             productsInStorage = prodInStorage;
-        }
-
-        /* This method updates the number of products in storage.
-         * If number of products is decreased a negative integer is passed as argument
-         * and if number of products is increased a positive integer is passed as argument.
-         */
-        public void updateProdInStorage(int updateProdInStorage)
-        {
-            productsInStorage += updateProdInStorage;                
-            
         }
 
         public override string ToString()

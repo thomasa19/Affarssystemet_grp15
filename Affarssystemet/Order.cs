@@ -30,13 +30,13 @@ namespace Affarssystemet
                          " Kund: " + customer.customerNumber + ", " + customer.customerName + "\n" +
                          " Beställda produkter:\n";
 
-            foreach (var item in orderRows)
+            foreach (OrderRow item in orderRows)
             {
                 returnStr += item.ToString();
                 orderSum += item.product.productPrice * item.numberOf;
             }
 
-            returnStr += "Att betala: " + orderSum.ToString("C") + "\n";
+            returnStr += "Ordersumma: " + orderSum.ToString("C") + "\n";
 
             return returnStr;
         }

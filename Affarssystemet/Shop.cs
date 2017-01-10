@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Affarssystemet
 {
+    /* Represents the shop, handling the products, customers and orders.
+     */
     class Shop
     {
-        private List<Order> shopOrders; // List of orders in the shop
+        private List<Order> shopOrders;       // List of orders in the shop
         private List<Customer> shopCustomers; // List of customers in the shop
-        private List<Product> shopProducts; // List of products in the shop
+        private List<Product> shopProducts;   // List of products in the shop
 
         private bool populated { get; set; } = false;  // For control when loading sample data
 
@@ -20,6 +22,7 @@ namespace Affarssystemet
         public int CountProductCreation2 { get; set; }
         public int CountProductCreation3 { get; set; }
         public int CountProductCreation4 { get; set; }
+
         /* Constructor creating the various lists used by the shop.
          */
         public Shop()
@@ -49,13 +52,13 @@ namespace Affarssystemet
                     {
                         if (part.product == product)
                         {
-                            product.updateProdInStorage(-(part.numberOf));
+                            product.productsInStorage -= part.numberOf;
                         }
                     }
-                    // Add the order to the orders list.
-                    shopOrders.Add(item);
-                    success = true;
                 }
+                // Add the order to the orders list.
+                shopOrders.Add(item);
+                success = true;
             }
 
             return success;
@@ -78,7 +81,6 @@ namespace Affarssystemet
         }
 
         // Find all order for a customer by customernumber. Returns a list of orders otherwise null.         
-
         public List<Order> OrderGetByCustomerNumber(int custNo)
         {
             try
@@ -160,7 +162,6 @@ namespace Affarssystemet
          */
         public bool CustomersAddCustomer(Customer item)
         {
-
             if (CustomerGetByNumber(item.customerNumber) != null)
             {
                 Console.WriteLine("Kunden finns redan, välj annat kundnummer");
@@ -170,8 +171,7 @@ namespace Affarssystemet
             {                
                 shopCustomers.Add(item);
                 return true;
-            }
-                
+            } 
         }
 
         /* Find a customer by customer number. Returns found customer otherwise null.
@@ -184,6 +184,21 @@ namespace Affarssystemet
             {
                 // Find the customer that equals the argument and if found it is returned.
                 if (shopCustomers[i].customerNumber == customerNo)
+                    findCustomer = shopCustomers[i];
+            }
+            return findCustomer;
+        }
+
+        /* Find a customer by customer number. Returns found customer otherwise null.
+        */
+        public Customer CustomerGetByName(string customerName)
+        {
+            Customer findCustomer = null;  // Defaults return to null.
+
+            for (int i = 0; i < shopCustomers.Count; i++)
+            {
+                // Find the customer that equals the argument and if found it is returned.
+                if (shopCustomers[i].customerName == customerName)
                     findCustomer = shopCustomers[i];
             }
             return findCustomer;
@@ -270,7 +285,7 @@ namespace Affarssystemet
                             {
                                 if (item.product == product)
                                 {
-                                    product.updateProdInStorage(item.numberOf);
+                                    product.productsInStorage += item.numberOf;
                                     Console.WriteLine("Nytt antal " + product.productName + " i lager: "+ product.productsInStorage);
                                 }
                                 
@@ -312,8 +327,35 @@ namespace Affarssystemet
          */
         public string PopulateShop()
         {
+            string returnStr = "Nu är: \n";
+
             if (!populated)
             {
+                if (CountProductCreation1 == 0)
+                {
+                    ProductsAddProduct(new Product(ProductGetNextNumber(), "Dator", 4999m, 70));
+                    CountProductCreation1++;
+                }
+
+                if (CountProductCreation2 == 0)
+                {
+                    ProductsAddProduct(new Product(ProductGetNextNumber(), "Skrivare", 2199m, 50));
+                    CountProductCreation2++;
+                }
+
+                if (CountProductCreation3 == 0)
+                {
+                    ProductsAddProduct(new Product(ProductGetNextNumber(), "Telefon", 3299m, 50));
+                    CountProductCreation3++;
+                }
+
+                if (CountProductCreation4 == 0)
+                {
+                    ProductsAddProduct(new Product(ProductGetNextNumber(), "Datorskärm", 999m, 50));
+                    CountProductCreation4++;
+                }
+                returnStr += "- 4 produkter finns tillagda\n";
+
                 if (shopProducts.Count < 4)
                 {
                     return "Det finns inte tillräckligt många produkter, du måste börja med att registrera fyra olika.";
@@ -323,17 +365,17 @@ namespace Affarssystemet
                     CustomersAddCustomer(new Customer(101, "Lars Larsson", "Strågatan 34, Billerud"));
                     CustomersAddCustomer(new Customer(102, "Carina Persson", "Linsvägen 9, Östersund"));
                     CustomersAddCustomer(new Customer(103, "Maria Johansson", "Sturegatan 99, Stockholm"));
+                    returnStr += "- 3 kunder finns tillagda\n";
 
                     OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 3), new OrderRow(ProductGetByNumber(203), 3), new OrderRow(ProductGetByNumber(204), 5) }));
                     OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(101), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 2), new OrderRow(ProductGetByNumber(202), 2) }));
                     OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(204), 5) }));
                     OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(102), new List<OrderRow>() { new OrderRow(ProductGetByNumber(202), 1) }));
+                    returnStr += "- 4 order finns tillagda\n";
 
                     populated = true;
 
-                    return "Nu är: \n" +
-                           "- 3 kunder tillagda\n" +
-                           "- 4 order tillagda\n";
+                    return returnStr;
                 }
             }
             else

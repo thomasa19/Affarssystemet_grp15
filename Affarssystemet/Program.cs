@@ -399,7 +399,7 @@ namespace Affarssystemet
                     break;
                 case 8:
                     // Print all placed orders
-                    Console.WriteLine(shop.ListAllOrders().ToString());
+                    Console.WriteLine(shop.ListAllOrders());
 
                     Console.WriteLine("");
                     Console.WriteLine("Tryck enter för att fortsätta.");

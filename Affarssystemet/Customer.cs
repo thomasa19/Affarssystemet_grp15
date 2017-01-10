@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Affarssystemet
-{    
+{
+    /* Represents the customers in the store.
+     */
     class Customer
     {
         public int customerNumber { get; private set; }
