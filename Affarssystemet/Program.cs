@@ -265,7 +265,15 @@ namespace Affarssystemet
                                 if (choice == 1)
                                 {
                                     Console.Write("Ge ett nytt antal:");
-                                    shop.ProductGetByNumber(choiceProduct).productsInStorage = Convert.ToInt32(Console.ReadLine()); // saknar felhantering av int                                    
+                                    try
+                                    {
+                                        shop.ProductGetByNumber(choiceProduct).productsInStorage =
+                                            Convert.ToInt32(Console.ReadLine());
+                                    }
+                                    catch
+                                    {
+                                        Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
+                                    }
                                 }
                                 if (choice == 2)
                                 {
