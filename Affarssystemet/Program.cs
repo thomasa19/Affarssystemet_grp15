@@ -390,8 +390,18 @@ namespace Affarssystemet
                     Console.ReadLine();
                     break;
                 case 6:
+                    // Remove one order
+                    Console.WriteLine("Ta bort order, nedan ordrar finns. \n\n");
+                    Console.WriteLine(shop.ListAllOrders());
 
-                    Console.WriteLine("");
+                    Console.Write("Ange order nr: ");
+                    int input;
+                    if(!int.TryParse(Console.ReadLine(),out input))
+                        Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
+                    else if (!shop.DeleteOrder(input))
+                        Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
+                    
+
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
                     break;
