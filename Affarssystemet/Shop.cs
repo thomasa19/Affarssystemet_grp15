@@ -322,7 +322,42 @@ namespace Affarssystemet
 
             return returnStr;
         }
+        /* Show all products in shop.
+        */
+        public string ListAllProducts()
+        {
+            string returnStr = "";
 
+            if (shopProducts.Count != 0)
+            {
+                foreach (var item in shopProducts)
+                {
+                    returnStr += item + "\n";
+                }
+            }
+            else
+                returnStr += "Det saknas produkter.\n";
+
+            return returnStr;
+        }
+        /* Show all customers in shop.
+       */
+        public string ListAllCustomers()
+        {
+            string returnStr = "";
+
+            if (shopCustomers.Count != 0)
+            {
+                foreach (var item in shopCustomers)
+                {
+                    returnStr += item + "\n";
+                }
+            }
+            else
+                returnStr += "Det saknas kunder.\n";
+
+            return returnStr;
+        }
         /* Adds a few customers and a couple of orders to start with.
          */
         public string PopulateShop()

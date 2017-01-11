@@ -406,6 +406,22 @@ namespace Affarssystemet
                     Console.ReadLine();
                     break;
                 case 9:
+                    // Print all placed products
+                    Console.WriteLine(shop.ListAllProducts());
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+                case 10:
+                    // Print all placed customers
+                    Console.WriteLine(shop.ListAllCustomers());
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
+                    break;
+                case 11:
                     // Populate some sample products and customers
                     Console.WriteLine(shop.PopulateShop());
 
@@ -440,7 +456,9 @@ namespace Affarssystemet
                    "6. Ta bort order\n" +
                    "7. Visa order för kund(nummer)\n" +
                    "8. Visa alla order\n" +
-                   "9. Läs in exempeldata\n" +
+                   "9. Visa alla produkter\n" +
+                   "10. Visa alla kunder\n" +
+                   "11. Läs in exempeldata\n" +
                    "0. Avsluta\n";
         }
     }
