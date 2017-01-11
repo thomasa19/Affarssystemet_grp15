@@ -242,13 +242,9 @@ namespace Affarssystemet
                 case 2:
 
                     int choiceProduct=99, choice=99;
-                    Console.WriteLine("Ändra produkt\n");                    
-                    List<Product> productList = shop.productList();
-                    foreach (var item in productList)
-                    {
-                        Console.WriteLine(item);
-                    }
-
+                    Console.WriteLine("Ändra produkt\n");
+                    Console.WriteLine(shop.ListAllProducts());
+                     
                     Console.Write("\n\nVilken produkt vill du ändra (Ange artikelnummer) : ");
 
                     // Controls if input is an integer if not it defaults to 99.
