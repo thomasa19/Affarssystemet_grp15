@@ -316,6 +316,7 @@ namespace Affarssystemet
 
             return returnStr;
         }
+
         /* Show all products in shop.
         */
         public string ListAllProducts()
@@ -334,6 +335,7 @@ namespace Affarssystemet
 
             return returnStr;
         }
+
         /* Show all customers in shop.
        */
         public string ListAllCustomers()
@@ -352,6 +354,39 @@ namespace Affarssystemet
 
             return returnStr;
         }
+
+        public string CustomersShortList()
+        {
+            string returnStr = "Välj någon av kunderna:\n";
+
+            foreach (Customer item in shopCustomers)
+            {
+                returnStr += item.customerNumber + ", " + item.customerName + "; ";
+            }
+
+            return returnStr;
+        }
+
+        public string ProductsShortList()
+        {
+            string returnStr = "Kunder:\n";
+
+            foreach (Product item in shopProducts)
+            {
+                returnStr += item.productNumber + ", " + item.productName + "; ";
+            }
+
+            return returnStr;
+        }
+
+        // Updates a row in an order with a number of a product bought.
+        public string OrderUpdate(int orderNo, int prodNo, int newNumberOf)
+        {
+            Order updateOrder = OrderGetByNumber(orderNo);
+
+            return updateOrder.UpdateOrderRows(prodNo, newNumberOf);
+        }
+
         /* Adds a few customers and a couple of orders to start with.
          */
         public string PopulateShop()

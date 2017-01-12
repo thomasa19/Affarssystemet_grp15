@@ -22,6 +22,30 @@ namespace Affarssystemet
             orderRows = ordRows;
         }
 
+        // Updates an order row in an order.
+        public string UpdateOrderRows(int prodNo, int newNumberOf)
+        {
+            bool found = false;
+            string returnStr = "";
+            
+            foreach (OrderRow row in orderRows)
+            {
+                if (row.product.productNumber == prodNo)
+                {
+                    row.UpdateRow(newNumberOf);
+                    returnStr += "Orderraden är ändrad till:\n";
+                    returnStr += row.ToString();
+                    found = true;
+                }
+            }
+            if (!found)
+            {
+                returnStr += "Produkten finns inte i ordern, inget ändrades. Försök igen.";
+            }
+
+            return returnStr;
+        }
+
         public override string ToString()
         {
             decimal orderSum = 0m;
@@ -54,6 +78,13 @@ namespace Affarssystemet
         {
             product = prod;
             numberOf = number;
+        }
+
+        // Changes the bought number of a product.
+        public void UpdateRow(int newNumberOf)
+        {
+            product.productsInStorage += (numberOf - newNumberOf);
+            numberOf = newNumberOf;
         }
 
         public override string ToString()

@@ -137,7 +137,14 @@ namespace Affarssystemet
         public static void MenuChoice(out bool runAgain, int menuAlternative)
         {
             runAgain = true; // Needs to be set for return, false only for exit alternative (0).
-         
+            // Variables used in various routines.
+            int customerNo = 0;
+            int productNo = 0;
+            int orderNo = 0;
+            int numberOf = 0;
+            int newNumberOf = 0;
+            ConsoleKeyInfo cki;
+
             switch (menuAlternative)
             {
                 case 1:
@@ -322,33 +329,29 @@ namespace Affarssystemet
                     Console.ReadLine();
                     break;
                 case 4:
-                    // Add an order
-                    int customerNo = 0;
-                    int productNo = 0;
-                    int numberOf = 0;
-
+                    // Adds an order
                     if (shop.ProductGetNextNumber() == 201)
                         Console.WriteLine("Det finns inga produkter, du måste börja med att registrera några.");
                     else if (shop.CustomerGetNextNumber() == 101)
                         Console.WriteLine("Det finns inga kunder, du måste börja med att registrera några.");
                     else
                     {
+                        Console.WriteLine(shop.CustomersShortList());
                         Console.Write("Ange kundnummer: ");
                         while (!int.TryParse(Console.ReadLine(), out customerNo) || shop.CustomerGetByNumber(customerNo) == null)
                             Console.Write("Du angav inte korrekt kundnr, försök igen: ");
                         List<OrderRow> myNewOrder = new List<OrderRow>();
 
-                        ConsoleKeyInfo cki;
                         do
                         {
+                            Console.WriteLine(shop.ProductsShortList());
                             Console.Write("Ange produktnr: ");
                             while (!int.TryParse(Console.ReadLine(), out productNo) || shop.ProductGetByNumber(productNo) == null || myNewOrder.Find(x => x.product.productNumber == productNo) != null)
                                 Console.Write("Du angav ett felaktigt produktnr eller har redan lagt till produkten, försök igen: ");
 
                             Console.Write("Ange antal: ");
-                            //cki = Console.ReadKey(true);
-                            while (!int.TryParse(Console.ReadLine(), out numberOf))
-                                Console.Write("Du angav inte ett korrkt antal, försök igen: ");
+                            while (!int.TryParse(Console.ReadLine(), out numberOf) || numberOf < 1)
+                                Console.Write("Antal måste vara ett heltal större än 0, försök igen: ");
                             myNewOrder.Add(new OrderRow(shop.ProductGetByNumber(productNo), numberOf));
 
                             Console.Write("Lägg till en rad till? (j/n)");
@@ -384,6 +387,37 @@ namespace Affarssystemet
                     Console.ReadLine();
                     break;
                 case 5:
+                    // Update an order row
+                    if (shop.OrderGetNextNumber() == 301)
+                        Console.WriteLine("Det finns inga produkter, du måste börja med att registrera några.");
+                    else
+                    {
+                        Console.WriteLine("Vet du vilket ordernummer du ska ändra i? (j/n)");
+                        cki = Console.ReadKey(true);
+                        if (cki.Key == ConsoleKey.N)
+                            Console.WriteLine("Ändringen avbröts. Du kan se alla ordrar som finns med alternativ 8.");
+                        else
+                        {
+                            Console.Write("Ange order du vill ändra: ");
+                            while (!int.TryParse(Console.ReadLine(), out orderNo) || shop.OrderGetByNumber(orderNo) == null)
+                                Console.Write("Du angav ett felaktigt ordernr, försök igen: ");
+                            if (shop.OrderGetByNumber(orderNo) == null)
+                                Console.WriteLine("Ordern finns inte, försök igen.");
+                            else
+                            {
+                                Console.WriteLine("\n" + shop.OrderGetByNumber(orderNo).ToString());
+                                Console.Write("Ange produktnr du vill ändra: ");
+                                while (!int.TryParse(Console.ReadLine(), out productNo) || shop.ProductGetByNumber(productNo) == null)
+                                    Console.Write("Du angav ett felaktigt produktnr, försök igen: ");
+
+                                Console.Write("Ange nytt antal: ");
+                                while (!int.TryParse(Console.ReadLine(), out newNumberOf) || newNumberOf < 1)
+                                    Console.Write("Antal måste vara ett heltal större än 0, försök igen: ");
+
+                                Console.WriteLine(shop.OrderUpdate(orderNo, productNo, newNumberOf));
+                            }
+                        }
+                    }
 
                     Console.WriteLine("");
                     Console.WriteLine("Tryck enter för att fortsätta.");
