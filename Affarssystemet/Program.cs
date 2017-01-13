@@ -151,20 +151,30 @@ namespace Affarssystemet
                     string prodName;
                     int prodStorage;
                     decimal prodPrice;
+                    string close1; //close if choosing not to proceed
+                    string close2;
+                  
                     //Add products by name,price, storage.
                     do
                     {
                         Console.Write("\nLägg till produkt namn: ");
                         prodName = Console.ReadLine();
 
-                        Console.Write("Lägg till produkt pris: ");
-                        while (!decimal.TryParse(Console.ReadLine(), out prodPrice))
+                        Console.Write("Lägg till produkt pris eller skriv 'q' för att stänga: ");
+                        while (!decimal.TryParse( close1 =Console.ReadLine(), out prodPrice))
+                        {
+                            if (close1 == "q")
+                                return;
                             Console.Write("Något blev fel försök igen: ");
-
-                        Console.Write("Lägg till antal i lager: ");
-                        while (!int.TryParse(Console.ReadLine(), out prodStorage))
+                        }
+                       
+                        Console.Write("Lägg till antal i lager eller skriv 'q' för att stänga: ");
+                        while (!int.TryParse(close2 =Console.ReadLine(), out prodStorage))                         
+                        {
+                            if (close2 == "q")
+                                return;
                             Console.Write("Något blev fel försök igen: ");
-
+                        }
                         Product product = new Product(shop.ProductGetNextNumber(), prodName, prodPrice, prodStorage);
                         shop.ProductsAddProduct(product);
                         Console.WriteLine(product);
