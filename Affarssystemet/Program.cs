@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace Affarssystemet
 {
-   
+
     class Program
     {
         // Creates the shop. Placed here to be accessible by menu method.
         private static Shop shop = new Shop();
-        
+
         static void Main(string[] args)
         {
             int menuAlternative;
             bool runAgain = true;
-           
+
 
             // Loop for showing the menu. When 0 the loop exits.
             while (runAgain)
@@ -26,8 +26,8 @@ namespace Affarssystemet
                 Console.Clear();
                 Console.WriteLine(PrintMenu());
                 Console.Write("Välj vad du vill göra: ");
-                           
-              
+
+
                 // Controls if input is an integer if not it defaults to 99.
                 if (int.TryParse(Console.ReadLine(), out menuAlternative))
                 {
@@ -52,8 +52,8 @@ namespace Affarssystemet
                 Console.WriteLine("Kund tillagd, happy..");
             else
                 Console.WriteLine("Kundnr krock");
-            
-            Customer cust2 = new Customer(shop.CustomerGetNextNumber(), "Karl Larsson", "Uppsala");          
+
+            Customer cust2 = new Customer(shop.CustomerGetNextNumber(), "Karl Larsson", "Uppsala");
             success = shop.CustomersAddCustomer(cust2);
             if (success)
                 Console.WriteLine("En till Kund tillagd, happy..");
@@ -86,11 +86,11 @@ namespace Affarssystemet
             Order ord1 = new Order(shop.OrderGetNextNumber(), cust1, rows);
             bool test = shop.OrderAdd(ord1);
             if (test)
-               Console.WriteLine("Första ordern registrerad\n");
+                Console.WriteLine("Första ordern registrerad\n");
 
             // Prints the order
             //Console.WriteLine(ord1);
-            
+
             // Create second sample order with same customer and adds it to the list in Shop
             Order ord2 = new Order(shop.OrderGetNextNumber(), cust1, rows);
 
@@ -105,7 +105,7 @@ namespace Affarssystemet
                 Console.WriteLine("Tummen upp! Ordern finns\n");
             else
                 Console.WriteLine("Tummen ner! Ordern saknas\n");
-                           
+
             List<Order> customerOrders = new List<Order>();
             customerOrders = shop.OrderGetByCustomerNumber(123);
 
@@ -116,8 +116,8 @@ namespace Affarssystemet
                 foreach (var item in customerOrders)
                 {
                     Console.WriteLine(item.ToString() +"\n");
-                }                
-            }                
+                }
+            }
             else
                 Console.WriteLine("Tummen ner!");
 
@@ -128,9 +128,9 @@ namespace Affarssystemet
             else
                 Console.WriteLine("Ingen order borttagen");
 
-            Console.ReadLine();            
+            Console.ReadLine();
         }
-               
+
 
         /* The functionality for the menu.
          */
@@ -148,119 +148,51 @@ namespace Affarssystemet
             switch (menuAlternative)
             {
                 case 1:
-                    Console.WriteLine(
-                   "1. Lägg till en Dator\n" +
-                   "2. Lägg till en Skrivare\n" +
-                   "3. Lägg till en Telefon\n" +
-                   "4. Lägg till en Datorskärm\n");
-              
-                    int menuSelection = 0;
-                    
-
-                    try
+                    string prodName;
+                    int prodStorage;
+                    decimal prodPrice;
+                    //Add products by name,price, storage.
+                    do
                     {
-                        menuSelection = int.Parse(Console.ReadLine()); //Input of the menuchoices.
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Ett fel inträffade!");
-                        Console.WriteLine("Tryck valfri knapp för att komma till huvudmenyn.");
-                        Console.ReadLine();
-                    }
+                        Console.Write("\nLägg till produkt namn: ");
+                        prodName = Console.ReadLine();
 
-                    switch (menuSelection)
-                    {
-                        case 1:
-                          //If CountProductCreating1 is beyond 0 product will not be created
-                            if (shop.CountProductCreation1 == 0)
-                            {
-                                Product computer = new Product(shop.ProductGetNextNumber(), "Dator", 4999m, 70);
-                                shop.ProductsAddProduct(computer);
-                                Console.WriteLine("Produkten är nu registrerad");
-                                    Console.WriteLine(computer.ToString());
-                                shop.CountProductCreation1++; 
-                            }
-                            else
-                            {
-                                Console.WriteLine("Produkten är redan registrerad");
-                            }
-                            
-                            Console.WriteLine("");
-                            Console.WriteLine("Tryck enter för att fortsätta.");
-                            Console.ReadLine();
-                            break;
-                        case 2:
-                            if (shop.CountProductCreation2 == 0)
-                                {
-                                Product printer = new Product(shop.ProductGetNextNumber(), "Skrivare", 2199m, 50);
-                                shop.ProductsAddProduct(printer);
-                                Console.WriteLine("Produkten är nu registrerad");
-                                Console.WriteLine(printer.ToString());
-                                shop.CountProductCreation2++;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Produkten är redan registrerad");
-                            }
+                        Console.Write("Lägg till produkt pris: ");
+                        while (!decimal.TryParse(Console.ReadLine(), out prodPrice))
+                            Console.Write("Något blev fel försök igen: ");
 
-                            Console.WriteLine("");
-                            Console.WriteLine("Tryck enter för att fortsätta.");
-                            Console.ReadLine();
-                            break;
-                        case 3:                 
-                            if (shop.CountProductCreation3 == 0)
-                            {
-                                Product telepphone = new Product(shop.ProductGetNextNumber(), "Telefon", 3299, 50);
-                                shop.ProductsAddProduct(telepphone);
-                                Console.WriteLine("Produkten är nu registrerad");
-                                Console.WriteLine(telepphone.ToString());
-                                shop.CountProductCreation3++;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Produkten är redan registrerad");
-                            }
-                            Console.WriteLine("");
-                            Console.WriteLine("Tryck enter för att fortsätta.");
-                            Console.ReadLine();
-                            break;
-                        case 4:
-                            if (shop.CountProductCreation4 == 0)
-                            {
-                                Product computerScreen = new Product(shop.ProductGetNextNumber(), "Datorskärm", 999m, 50);
-                                shop.ProductsAddProduct(computerScreen);
-                                Console.WriteLine("Produkten är nu registrerad");
-                                Console.WriteLine(computerScreen.ToString());
-                                shop.CountProductCreation4++;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Produkten är redan registrerad");
-                            }
-                            Console.WriteLine("");
-                            Console.WriteLine("Tryck enter för att fortsätta.");
-                            Console.ReadLine();
-                            break;
-                        default:
-                            Console.WriteLine("Du måste välja något av nedanstående."); // Om användaren använder någonting annat än ovan tillgängliga alternativ.
-                            break;
-                    }
+                        Console.Write("Lägg till antal i lager: ");
+                        while (!int.TryParse(Console.ReadLine(), out prodStorage))
+                            Console.Write("Något blev fel försök igen: ");
+
+                        Product product = new Product(shop.ProductGetNextNumber(), prodName, prodPrice, prodStorage);
+                        shop.ProductsAddProduct(product);
+                        Console.WriteLine(product);
+
+                        Console.WriteLine("Vill du lägga till fler produkter? j/n");
+                       
+                        cki = Console.ReadKey(false);
+                    } while (cki.Key == ConsoleKey.J);
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Tryck enter för att fortsätta.");
+                    Console.ReadLine();
                     break;
                 case 2:
 
-                    int choiceProduct=99, choice=99;
+                    int choiceProduct = 99, choice = 99;
                     Console.WriteLine("Ändra produkt\n");
                     Console.WriteLine(shop.ListAllProducts());
-                     
+
                     Console.Write("\n\nVilken produkt vill du ändra (Ange artikelnummer) : ");
 
                     // Controls if input is an integer if not it defaults to 99.
                     if (int.TryParse(Console.ReadLine(), out choiceProduct))
                     {
-                        if (shop.ProductGetByNumber(choiceProduct)!=null)
+                        if (shop.ProductGetByNumber(choiceProduct) != null)
                         {
-                            Console.WriteLine("Vill du ändra:\n" + 
-                                              "1. antal\n"+
+                            Console.WriteLine("Vill du ändra:\n" +
+                                              "1. antal\n" +
                                               "2. pris\n");
 
                             if (int.TryParse(Console.ReadLine(), out choice))
@@ -285,7 +217,7 @@ namespace Affarssystemet
                                     {
                                         shop.ProductGetByNumber(choiceProduct).productPrice =
                                             Convert.ToInt32(Console.ReadLine());
-                                                                                
+
                                     }
                                     catch
                                     {
@@ -298,13 +230,13 @@ namespace Affarssystemet
                                 Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
                             }
                         }
-                        else                        
+                        else
                             Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
                     }
                     else
                     {
                         Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
-                    }                   
+                    }
 
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
@@ -324,7 +256,7 @@ namespace Affarssystemet
 
                     Console.WriteLine("\nKund tillagd med nedan uppgifter:");
                     Console.WriteLine(customer.ToString());
-                    
+
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
                     break;
@@ -434,7 +366,7 @@ namespace Affarssystemet
                         Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
                     else if (!shop.DeleteOrder(input))
                         Console.WriteLine("Du har angett ett val som antingen inte finns eller har fel format");
-                    
+
 
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
