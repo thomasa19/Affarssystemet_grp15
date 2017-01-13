@@ -160,20 +160,21 @@ namespace Affarssystemet
                         Console.Write("\nLägg till produkt namn: ");
                         prodName = Console.ReadLine();
 
-                        Console.Write("Lägg till produkt pris eller skriv 'q' för att stänga: ");
+                        Console.Write("Lägg till produkt pris: ");
                         while (!decimal.TryParse( close1 =Console.ReadLine(), out prodPrice))
                         {
+                            Console.Write("Något blev fel försök igen eller skriv 'q' för att stänga: ");
+
                             if (close1 == "q")
                                 return;
-                            Console.Write("Något blev fel försök igen: ");
                         }
                        
-                        Console.Write("Lägg till antal i lager eller skriv 'q' för att stänga: ");
+                        Console.Write("Lägg till antal i lager: ");
                         while (!int.TryParse(close2 =Console.ReadLine(), out prodStorage))                         
                         {
+                            Console.Write("Något blev fel försök igen eller skriv 'q' för att stänga: ");
                             if (close2 == "q")
-                                return;
-                            Console.Write("Något blev fel försök igen: ");
+                                return;                          
                         }
                         Product product = new Product(shop.ProductGetNextNumber(), prodName, prodPrice, prodStorage);
                         shop.ProductsAddProduct(product);
