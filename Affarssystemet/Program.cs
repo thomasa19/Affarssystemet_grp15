@@ -404,8 +404,9 @@ namespace Affarssystemet
                         {
                             foreach (var item in shop.OrderGetByCustomerNumber(input))
                             {
-                                Console.WriteLine(item);
-                            }                            
+                                Console.WriteLine(item);                                
+                            }
+                            Console.WriteLine("Total kostnad för samtliga ordrar: "+shop.CustomerTotalCost(input) + " kr");
                             cont = false;
                         }          
                     } while (cont);

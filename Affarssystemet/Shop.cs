@@ -387,6 +387,24 @@ namespace Affarssystemet
             return updateOrder.UpdateOrderRows(prodNo, newNumberOf);
         }
 
+        /* Returns a customer total of products and sum of cost.
+         */
+
+            public string CustomerTotalCost(int customerNo)
+        {   
+            decimal productTotalSum=0;
+
+            foreach (var item in this.OrderGetByCustomerNumber(customerNo))
+            {                
+                foreach (var orderRow in item.orderRows)
+                {
+                    productTotalSum += (orderRow.product.productPrice * orderRow.numberOf);
+                }
+            }
+            return productTotalSum.ToString();
+        }
+        
+
         /* Adds a few customers and a couple of orders to start with.
          */
         public string PopulateShop()
