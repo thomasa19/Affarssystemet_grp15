@@ -383,8 +383,33 @@ namespace Affarssystemet
                     Console.ReadLine();
                     break;
                 case 7:
-
-                    Console.WriteLine("");
+                    // Find if a customer has an order
+                    bool cont=true;
+                    do
+                    {
+                        Console.WriteLine("\n\nVisa order för ett visst kund(nummer)");                        
+                        Console.WriteLine(shop.ListAllCustomers());
+                        Console.Write("Skriv in ett kundnr: ");
+                                                
+                        if (!int.TryParse(Console.ReadLine(), out input))
+                          Console.WriteLine("Du har angett ett val som har fel format");                      
+                        else if (shop.CustomerGetByNumber(input)==null)
+                            Console.WriteLine("Du har angett ett kundnummer som inte finns");
+                        else if (shop.OrderGetByCustomerNumber(input)==null)
+                        {
+                            Console.WriteLine("Kunden har ingen order i shoppen");
+                            cont = false;
+                        }                            
+                        else
+                        {
+                            foreach (var item in shop.OrderGetByCustomerNumber(input))
+                            {
+                                Console.WriteLine(item);
+                            }                            
+                            cont = false;
+                        }          
+                    } while (cont);
+                    
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
                     break;

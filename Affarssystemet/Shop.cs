@@ -369,7 +369,7 @@ namespace Affarssystemet
 
         public string ProductsShortList()
         {
-            string returnStr = "Kunder:\n";
+            string returnStr = "Produkter:\n";
 
             foreach (Product item in shopProducts)
             {
