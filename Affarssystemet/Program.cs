@@ -19,6 +19,8 @@ namespace Affarssystemet
             int menuAlternative;
             bool runAgain = true;
 
+            // Loading example data into the shop.
+            shop.PopulateShop();
 
             // Loop for showing the menu. When 0 the loop exits.
             while (runAgain)
@@ -38,97 +40,6 @@ namespace Affarssystemet
                     MenuChoice(out runAgain, 99);
                 }
             }
-
-            // Creates sample customers and add to the list in Shop
-            Customer cust1 = new Customer(shop.CustomerGetNextNumber(), "Thomas Arnqvist", "Uppsala");
-            bool success = shop.CustomersAddCustomer(cust1);
-            if (success)
-                Console.WriteLine("Kund tillagd, happy..");
-
-            // test fel typ av kund
-            Customer cust3 = new Customer(123, "Thomas Arnqvist", "Uppsala");
-            success = shop.CustomersAddCustomer(cust1);
-            if (success)
-                Console.WriteLine("Kund tillagd, happy..");
-            else
-                Console.WriteLine("Kundnr krock");
-
-            Customer cust2 = new Customer(shop.CustomerGetNextNumber(), "Karl Larsson", "Uppsala");
-            success = shop.CustomersAddCustomer(cust2);
-            if (success)
-                Console.WriteLine("En till Kund tillagd, happy..");
-
-            // Prints the customers
-            Console.WriteLine(cust1.ToString());
-            Console.WriteLine(cust2.ToString());
-
-            // Creates a couple of sample products
-            Product prod1 = new Product(233, "Äpple", 5m, 150);
-            Product prod2 = new Product(234, "Apelsin", 10m, 32);
-            // Adds products to the list in Shop
-            shop.ProductsAddProduct(prod1);
-            shop.ProductsAddProduct(prod2);
-
-            // Prints the products
-            Console.WriteLine(prod1.ToString());
-            Console.WriteLine(prod2.ToString());
-
-            // Creates a couple of sample orderrows
-            OrderRow ordRow1 = new OrderRow(prod1, 23);
-            OrderRow ordRow2 = new OrderRow(prod2, 4);
-
-            // Creates a list for the orderrows and adds sample rows
-            List<OrderRow> rows = new List<OrderRow>();
-            rows.Add(ordRow1);
-            rows.Add(ordRow2);
-
-            // Creates a sample order and adds it to the list in Shop
-            Order ord1 = new Order(shop.OrderGetNextNumber(), cust1, rows);
-            bool test = shop.OrderAdd(ord1);
-            if (test)
-                Console.WriteLine("Första ordern registrerad\n");
-
-            // Prints the order
-            //Console.WriteLine(ord1);
-
-            // Create second sample order with same customer and adds it to the list in Shop
-            Order ord2 = new Order(shop.OrderGetNextNumber(), cust1, rows);
-
-            test = shop.OrderAdd(ord2);
-            if (test)
-                Console.WriteLine("Andra ordern registrerad\n");
-
-            // Prints the orders
-            //Console.WriteLine(ord2);
-
-            if (shop.OrderGetByNumber(303) != null)
-                Console.WriteLine("Tummen upp! Ordern finns\n");
-            else
-                Console.WriteLine("Tummen ner! Ordern saknas\n");
-
-            List<Order> customerOrders = new List<Order>();
-            customerOrders = shop.OrderGetByCustomerNumber(123);
-
-            if (customerOrders != null)
-            {
-                Console.WriteLine("Kunden har beställt:");
-
-                foreach (var item in customerOrders)
-                {
-                    Console.WriteLine(item.ToString() +"\n");
-                }
-            }
-            else
-                Console.WriteLine("Tummen ner!");
-
-            // Delete order by ordernumber           
-            Order delOrder = ord2;
-            if (shop.DeleteOrder(delOrder.orderNumber))
-                Console.WriteLine("Ordernr " + delOrder.orderNumber + " borttagen.");
-            else
-                Console.WriteLine("Ingen order borttagen");
-
-            Console.ReadLine();
         }
 
 
@@ -298,11 +209,10 @@ namespace Affarssystemet
                             myNewOrder.Add(new OrderRow(shop.ProductGetByNumber(productNo), numberOf));
 
                             Console.Write("Lägg till en rad till? (j/n)");
-                            cki = Console.ReadKey(false);  // show the key as you read it
-                            Console.WriteLine();
+                            cki = Console.ReadKey(true);
                         } while (cki.Key == ConsoleKey.J);
 
-                        Console.WriteLine("Du håller på att skapa följande order:");
+                        Console.WriteLine("\n\nDu håller på att skapa följande order:");
                         Console.WriteLine("Ordernr: " + shop.OrderGetNextNumber());
                         Console.WriteLine("Kund: " + customerNo + ", " + shop.CustomerGetByNumber(customerNo).customerName);
                         Console.WriteLine("Produkter:");
@@ -312,10 +222,10 @@ namespace Affarssystemet
                                 ((item.product.productsInStorage - item.numberOf < 0) ? "\n OBS att denna produkt restnoteras och leveransen försenas." : ""));
                         }
 
-                        Console.WriteLine("Spara order? (j/n)");
+                        Console.WriteLine("\nDu kan avbryta med \"n\", tryck enter eller annan bokstav för att spara.");
                         Console.WriteLine();
-                        cki = Console.ReadKey(false);
-                        if (cki.Key == ConsoleKey.J)
+                        cki = Console.ReadKey(true);
+                        if (cki.Key != ConsoleKey.N)
                         {
                             int saveOrderNo = shop.OrderGetNextNumber();
                             shop.OrderAdd(new Order(saveOrderNo, shop.CustomerGetByNumber(customerNo), myNewOrder));
@@ -438,14 +348,6 @@ namespace Affarssystemet
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
                     break;
-                case 11:
-                    // Populate some sample products and customers
-                    Console.WriteLine(shop.PopulateShop());
-
-                    Console.WriteLine("");
-                    Console.WriteLine("Tryck enter för att fortsätta.");
-                    Console.ReadLine();
-                    break;
                 case 0:
                     // End and exit the program
                     runAgain = false;
@@ -475,7 +377,6 @@ namespace Affarssystemet
                    "8. Visa alla order\n" +
                    "9. Visa alla produkter\n" +
                    "10. Visa alla kunder\n" +
-                   "11. Läs in exempeldata\n" +
                    "0. Avsluta\n";
         }
     }

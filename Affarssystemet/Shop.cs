@@ -14,15 +14,6 @@ namespace Affarssystemet
         private List<Customer> shopCustomers; // List of customers in the shop
         private List<Product> shopProducts;   // List of products in the shop
 
-        private bool populated { get; set; } = false;  // For control when loading sample data
-
-
-        //Counts created products in menu. To prevent duplicate products being created.
-        public int CountProductCreation1 { get; set; }
-        public int CountProductCreation2 { get; set; }
-        public int CountProductCreation3 { get; set; }
-        public int CountProductCreation4 { get; set; }
-
         /* Constructor creating the various lists used by the shop.
          */
         public Shop()
@@ -407,61 +398,21 @@ namespace Affarssystemet
 
         /* Adds a few customers and a couple of orders to start with.
          */
-        public string PopulateShop()
+        public void PopulateShop()
         {
-            string returnStr = "Nu är: \n";
+            ProductsAddProduct(new Product(ProductGetNextNumber(), "Dator", 4999m, 70));
+            ProductsAddProduct(new Product(ProductGetNextNumber(), "Skrivare", 2199m, 50));
+            ProductsAddProduct(new Product(ProductGetNextNumber(), "Telefon", 3299m, 50));
+            ProductsAddProduct(new Product(ProductGetNextNumber(), "Datorskärm", 999m, 50));
 
-            if (!populated)
-            {
-                if (CountProductCreation1 == 0)
-                {
-                    ProductsAddProduct(new Product(ProductGetNextNumber(), "Dator", 4999m, 70));
-                    CountProductCreation1++;
-                }
+            CustomersAddCustomer(new Customer(101, "Lars Larsson", "Strågatan 34, Billerud"));
+            CustomersAddCustomer(new Customer(102, "Carina Persson", "Linsvägen 9, Östersund"));
+            CustomersAddCustomer(new Customer(103, "Maria Johansson", "Sturegatan 99, Stockholm"));
 
-                if (CountProductCreation2 == 0)
-                {
-                    ProductsAddProduct(new Product(ProductGetNextNumber(), "Skrivare", 2199m, 50));
-                    CountProductCreation2++;
-                }
-
-                if (CountProductCreation3 == 0)
-                {
-                    ProductsAddProduct(new Product(ProductGetNextNumber(), "Telefon", 3299m, 50));
-                    CountProductCreation3++;
-                }
-
-                if (CountProductCreation4 == 0)
-                {
-                    ProductsAddProduct(new Product(ProductGetNextNumber(), "Datorskärm", 999m, 50));
-                    CountProductCreation4++;
-                }
-                returnStr += "- 4 produkter finns tillagda\n";
-
-                if (shopProducts.Count < 4)
-                {
-                    return "Det finns inte tillräckligt många produkter, du måste börja med att registrera fyra olika.";
-                }
-                else
-                {
-                    CustomersAddCustomer(new Customer(101, "Lars Larsson", "Strågatan 34, Billerud"));
-                    CustomersAddCustomer(new Customer(102, "Carina Persson", "Linsvägen 9, Östersund"));
-                    CustomersAddCustomer(new Customer(103, "Maria Johansson", "Sturegatan 99, Stockholm"));
-                    returnStr += "- 3 kunder finns tillagda\n";
-
-                    OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 3), new OrderRow(ProductGetByNumber(203), 3), new OrderRow(ProductGetByNumber(204), 5) }));
-                    OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(101), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 2), new OrderRow(ProductGetByNumber(202), 2) }));
-                    OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(204), 5) }));
-                    OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(102), new List<OrderRow>() { new OrderRow(ProductGetByNumber(202), 1) }));
-                    returnStr += "- 4 order finns tillagda\n";
-
-                    populated = true;
-
-                    return returnStr;
-                }
-            }
-            else
-                return "Exempeldata är redan inläst.";
+            OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 3), new OrderRow(ProductGetByNumber(203), 3), new OrderRow(ProductGetByNumber(204), 5) }));
+            OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(101), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 2), new OrderRow(ProductGetByNumber(202), 2) }));
+            OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(204), 5) }));
+            OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(102), new List<OrderRow>() { new OrderRow(ProductGetByNumber(202), 1) }));
         }
     }
 }
