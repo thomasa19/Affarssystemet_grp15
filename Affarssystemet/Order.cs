@@ -46,6 +46,21 @@ namespace Affarssystemet
             return returnStr;
         }
 
+        public bool FindProductRow(Product findProduct)
+        {
+            bool found = false;
+
+            foreach (OrderRow row in orderRows)
+            {
+                if (row.product.productNumber == findProduct.productNumber)
+                {
+                    found = true;
+                }
+            }
+
+            return found;
+        }
+
         public override string ToString()
         {
             decimal orderSum = 0m;

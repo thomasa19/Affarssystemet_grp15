@@ -122,7 +122,6 @@ namespace Affarssystemet
             return returnNumber;
         }
 
-
         /* Find out the next available customernumber. Returns next number. If the shops
          * customerlist is empty it returns the first number, the default sequense starts with 101.
          */
@@ -166,7 +165,7 @@ namespace Affarssystemet
         }
 
         /* Find a customer by customer number. Returns found customer otherwise null.
-        */
+         */
         public Customer CustomerGetByNumber(int customerNo)
         {
             Customer findCustomer = null;  // Defaults return to null.
@@ -181,7 +180,7 @@ namespace Affarssystemet
         }
 
         /* Find a customer by customer number. Returns found customer otherwise null.
-        */
+         */
         public Customer CustomerGetByName(string customerName)
         {
             Customer findCustomer = null;  // Defaults return to null.
@@ -196,8 +195,8 @@ namespace Affarssystemet
         }
 
         /* Find out the next available product number. Returns next number. If the shops
-      * productlist is empty it returns the first number, the default sequense starts with 201.
-      */
+         * productlist is empty it returns the first number, the default sequense starts with 201.
+         */
         public int ProductGetNextNumber()
         {
             int returnNumber = 0;
@@ -221,7 +220,7 @@ namespace Affarssystemet
         }
 
         /* Find a product by product number. Returns found product otherwise null.
-        */
+         */
         public Product ProductGetByNumber(int productNo)
         {
             Product findProduct = null;  // Defaults return to null.
@@ -234,6 +233,7 @@ namespace Affarssystemet
             }
             return findProduct;
         }
+
         /* Adds a new product.
          * Needed for creating orders.
          */
@@ -309,7 +309,7 @@ namespace Affarssystemet
         }
 
         /* Show all products in shop.
-        */
+         */
         public string ListAllProducts()
         {
             string returnStr = "";
@@ -328,7 +328,7 @@ namespace Affarssystemet
         }
 
         /* Show all customers in shop.
-       */
+         */
         public string ListAllCustomers()
         {
             string returnStr = "";
@@ -346,6 +346,7 @@ namespace Affarssystemet
             return returnStr;
         }
 
+        // A shortformed list of all customers.
         public string CustomersShortList()
         {
             string returnStr = "Välj någon av kunderna:\n";
@@ -358,6 +359,7 @@ namespace Affarssystemet
             return returnStr;
         }
 
+        // A shortformed list of all products.
         public string ProductsShortList()
         {
             string returnStr = "Produkter:\n";
@@ -380,8 +382,7 @@ namespace Affarssystemet
 
         /* Returns a customer total of products and sum of cost.
          */
-
-            public string CustomerTotalCost(int customerNo)
+        public string CustomerTotalCost(int customerNo)
         {   
             decimal productTotalSum=0;
 
@@ -392,18 +393,26 @@ namespace Affarssystemet
                     productTotalSum += (orderRow.product.productPrice * orderRow.numberOf);
                 }
             }
-            return productTotalSum.ToString();
+            return productTotalSum.ToString("C");
         }
         
+        // Checks to see if a product is in an order
+        public bool ProductInOrder(int productNo, int orderNo)
+        {
+            Product findProduct = ProductGetByNumber(productNo);
+            Order searchOrder = OrderGetByNumber(orderNo);
+
+            return searchOrder.FindProductRow(findProduct);
+        }
 
         /* Adds a few customers and a couple of orders to start with.
          */
         public void PopulateShop()
         {
-            ProductsAddProduct(new Product(ProductGetNextNumber(), "Dator", 4999m, 70));
-            ProductsAddProduct(new Product(ProductGetNextNumber(), "Skrivare", 2199m, 50));
-            ProductsAddProduct(new Product(ProductGetNextNumber(), "Telefon", 3299m, 50));
-            ProductsAddProduct(new Product(ProductGetNextNumber(), "Datorskärm", 999m, 50));
+            ProductsAddProduct(new Product(201, "DATOR", 4999m, 70));
+            ProductsAddProduct(new Product(202, "SKRIVARE", 2199m, 50));
+            ProductsAddProduct(new Product(203, "TELEFON", 3299m, 50));
+            ProductsAddProduct(new Product(204, "DATORSKÄRM", 999m, 50));
 
             CustomersAddCustomer(new Customer(101, "Lars Larsson", "Strågatan 34, Billerud"));
             CustomersAddCustomer(new Customer(102, "Carina Persson", "Linsvägen 9, Östersund"));
