@@ -65,6 +65,7 @@ namespace Affarssystemet
                     decimal prodPrice;
                     string close1; //close if choosing not to proceed
                     string close2;
+                   
                     
                   
                     //Add products by name,price, storage.
@@ -72,12 +73,19 @@ namespace Affarssystemet
                     {
                         Console.Write("\nLägg till produkt namn: ");
                         
-                        while (String.IsNullOrEmpty(prodName = Console.ReadLine().ToUpper()) || prodName.Any(c => char.IsDigit(c)))
+                        while (String.IsNullOrWhiteSpace(prodName = Console.ReadLine().ToUpper()) || prodName.Any(c => char.IsDigit(c)) || prodName.Length > 20 || prodName.Length < 3 || prodName.Any(c => char.IsPunctuation(c)))
                         {
-                            if (String.IsNullOrEmpty(prodName))
+                            if (String.IsNullOrWhiteSpace(prodName))
                             Console.Write("Du har inte skrivit något, Vänligen försök igen: ");
                             if (prodName.Any(c => char.IsDigit(c)))
                                 Console.Write("Namnet får bara innehålla bokstäver, försök igen: ");
+                            if (prodName.Length > 20)
+                                Console.Write("Du har skrivit ett namn som är längre än 20 tecken, vänligen försök igen: ");
+                            if (prodName.Length < 3 && !String.IsNullOrWhiteSpace(prodName))
+                                Console.Write("Du skrivit ett namn med mindre än 3 tecken, vänligen försök igen: ");
+                            if (prodName.Any(c => char.IsPunctuation(c)))
+                                Console.Write("Ogiltigt tecken användes, försök igen: ");
+                            
                         }
                         
 
