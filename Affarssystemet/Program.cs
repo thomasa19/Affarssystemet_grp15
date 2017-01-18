@@ -77,7 +77,7 @@ namespace Affarssystemet
                             if (String.IsNullOrEmpty(prodName))
                             Console.Write("Du har inte skrivit något, Vänligen försök igen: ");
                             if (prodName.Any(c => char.IsDigit(c)))
-                                Console.WriteLine("Namnet får bara innehålla bokstäver");
+                                Console.Write("Namnet får bara innehålla bokstäver, försök igen: ");
                         }
                         
 
