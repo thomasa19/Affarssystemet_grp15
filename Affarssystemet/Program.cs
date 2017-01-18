@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -64,12 +65,21 @@ namespace Affarssystemet
                     decimal prodPrice;
                     string close1; //close if choosing not to proceed
                     string close2;
+                    
                   
                     //Add products by name,price, storage.
                     do
                     {
                         Console.Write("\nLägg till produkt namn: ");
-                        prodName = Console.ReadLine();
+                        
+                        while (String.IsNullOrEmpty(prodName = Console.ReadLine().ToUpper()) || prodName.Any(c => char.IsDigit(c)))
+                        {
+                            if (String.IsNullOrEmpty(prodName))
+                            Console.Write("Du har inte skrivit något, Vänligen försök igen: ");
+                            if (prodName.Any(c => char.IsDigit(c)))
+                                Console.WriteLine("Namnet får bara innehålla bokstäver");
+                        }
+                        
 
                         Console.Write("Lägg till produkt pris: ");
                         while (!decimal.TryParse( close1 =Console.ReadLine(), out prodPrice))
