@@ -184,14 +184,45 @@ namespace Affarssystemet
 
                 case 3:
                     // Adds a customer
-                    Console.WriteLine("Lägg till en kund");
 
-                    Console.Write("\nAnge kundnamn: ");
-                    string custName = Console.ReadLine();
+                    string custName;
+                    string custAddress;
+                    ConsoleKeyInfo ck;
+                    bool doAgain = false;
 
-                    Console.Write("\nAnge kundadress: ");
-                    string custAddress = Console.ReadLine();
+                    do
+                    {
+                        Console.WriteLine("Lägg till en kund");
+                        Console.Write("\nAnge kundnamn [Ex: Olle Olsson]: ");
+                        while (string.IsNullOrWhiteSpace(custName = Console.ReadLine()) || custName.Any(x => char.IsDigit(x) || custName.Any(c => char.IsPunctuation(c))))
+                        {
+                            Console.WriteLine("Ett kundnamn måste anges och får endast innehålla bokstäver och blanksteg mellan för och efternamn. Prova igen.");
+                            Console.Write("\nAnge kundnamn: ");
+                        }
+                        
+                        Console.Write("\nAnge kundadress [Ex: Skolgatan 3]: ");
 
+                        while (string.IsNullOrWhiteSpace(custAddress = Console.ReadLine()) || custAddress.Any(c => char.IsPunctuation(c)))
+                        {
+                            Console.WriteLine("En kundadress måste anges och får endast innehålla bokstäver, siffror och blanksteg. Prova igen.");
+                            Console.Write("\nAnge kundadress: ");
+                        }
+                        Console.WriteLine("\nVill du lägga till kund med nedan uppgifter (J/N):");
+                        Console.WriteLine(custName);
+                        Console.WriteLine(custAddress);
+                        ck = Console.ReadKey(false);
+
+                        if (ck.Key == ConsoleKey.N)
+                        {
+                            Console.WriteLine("\n\nLägg till ny kundinformation");
+                            doAgain = true;
+                        }
+                        else
+                            doAgain = false;
+                            
+
+                    } while (doAgain);
+                    
                     Customer customer = new Customer(shop.CustomerGetNextNumber(), custName, custAddress);
                     shop.CustomersAddCustomer(customer);
 
@@ -201,6 +232,7 @@ namespace Affarssystemet
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
                     break;
+
                 case 4:
                     // Adds an order
                     if (shop.ProductGetNextNumber() == 201)
