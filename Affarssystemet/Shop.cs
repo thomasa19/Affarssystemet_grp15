@@ -13,6 +13,7 @@ namespace Affarssystemet
         private List<Order> shopOrders;       // List of orders in the shop
         private List<Customer> shopCustomers; // List of customers in the shop
         private List<Product> shopProducts;   // List of products in the shop
+        public int OrderNextNumber { get; private set; } = 301; // Stores next ordernumber to be used
 
         /* Constructor creating the various lists used by the shop.
          */
@@ -49,10 +50,18 @@ namespace Affarssystemet
                 }
                 // Add the order to the orders list.
                 shopOrders.Add(item);
+                OrderNextNumber += 1;
                 success = true;
             }
 
             return success;
+        }
+
+        /* Returns the number of placed orders
+         */
+        public int NumberOfPlacedOrders()
+        {
+            return shopOrders.Count();
         }
 
         /* Find an order by ordernumber. Returns found order otherwise null.
@@ -94,32 +103,6 @@ namespace Affarssystemet
             {
                 return null;
             }
-
-        }
-
-        /* Find out the next available ordernumber. Returns next number. If the shops
-         * orderlist is empty it returns the first number, the default sequense starts with 301.
-         */
-        public int OrderGetNextNumber()
-        {
-            int returnNumber = 0;
-
-            if (shopOrders.Count == 0)
-                returnNumber = 301;  // If shops order list is empty, return first number in default sequense.
-            else
-            {
-                for (int i = 0; i < shopOrders.Count; i++)
-                {
-                    // Finds the highest ordernumber taken. Needed when orders are removed.
-                    if (shopOrders[i].orderNumber > returnNumber)
-                    {
-                        returnNumber = shopOrders[i].orderNumber;  
-                    }
-                }
-                returnNumber += 1;  // +1 to the highest taken ordernumber       
-            }
-
-            return returnNumber;
         }
 
         /* Find out the next available customernumber. Returns next number. If the shops
@@ -418,10 +401,10 @@ namespace Affarssystemet
             CustomersAddCustomer(new Customer(102, "Carina Persson", "Linsvägen 9, Östersund"));
             CustomersAddCustomer(new Customer(103, "Maria Johansson", "Sturegatan 99, Stockholm"));
 
-            OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 3), new OrderRow(ProductGetByNumber(203), 3), new OrderRow(ProductGetByNumber(204), 5) }));
-            OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(101), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 2), new OrderRow(ProductGetByNumber(202), 2) }));
-            OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(204), 5) }));
-            OrderAdd(new Order(OrderGetNextNumber(), CustomerGetByNumber(102), new List<OrderRow>() { new OrderRow(ProductGetByNumber(202), 1) }));
+            OrderAdd(new Order(OrderNextNumber, CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 3), new OrderRow(ProductGetByNumber(203), 3), new OrderRow(ProductGetByNumber(204), 5) }));
+            OrderAdd(new Order(OrderNextNumber, CustomerGetByNumber(101), new List<OrderRow>() { new OrderRow(ProductGetByNumber(201), 2), new OrderRow(ProductGetByNumber(202), 2) }));
+            OrderAdd(new Order(OrderNextNumber, CustomerGetByNumber(103), new List<OrderRow>() { new OrderRow(ProductGetByNumber(204), 5) }));
+            OrderAdd(new Order(OrderNextNumber, CustomerGetByNumber(102), new List<OrderRow>() { new OrderRow(ProductGetByNumber(202), 1) }));
         }
     }
 }

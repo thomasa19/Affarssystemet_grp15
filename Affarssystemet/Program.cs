@@ -290,7 +290,7 @@ namespace Affarssystemet
                         } while (cki.Key == ConsoleKey.J);
 
                         Console.WriteLine("\n\nDu håller på att skapa följande order:");
-                        Console.WriteLine("Ordernr: " + shop.OrderGetNextNumber());
+                        Console.WriteLine("Ordernr: " + shop.OrderNextNumber);
                         Console.WriteLine("Kund: " + customerNo + ", " + shop.CustomerGetByNumber(customerNo).customerName);
                         Console.WriteLine("Produkter:");
                         foreach (var item in myNewOrder)
@@ -304,7 +304,7 @@ namespace Affarssystemet
                         cki = Console.ReadKey(true);
                         if (cki.Key != ConsoleKey.N)
                         {
-                            int saveOrderNo = shop.OrderGetNextNumber();
+                            int saveOrderNo = shop.OrderNextNumber;
                             shop.OrderAdd(new Order(saveOrderNo, shop.CustomerGetByNumber(customerNo), myNewOrder));
                             Console.WriteLine("\nOrdern är sparad.\n" + shop.OrderGetByNumber(saveOrderNo).ToString());
                         }
@@ -318,8 +318,8 @@ namespace Affarssystemet
                     break;
                 case 5:
                     // Update an order row
-                    if (shop.OrderGetNextNumber() == 301)
-                        Console.WriteLine("Det finns inga produkter, du måste börja med att registrera några.");
+                    if (shop.NumberOfPlacedOrders() == 0)
+                        Console.WriteLine("Det finns inga ordrar, du måste börja med att registrera några.");
                     else
                     {
                         Console.WriteLine("Vill du se en lista över alla ordrar? (j/n)");
