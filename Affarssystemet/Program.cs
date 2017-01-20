@@ -189,10 +189,11 @@ namespace Affarssystemet
                     string custAddress;
                     ConsoleKeyInfo ck;
                     bool doAgain = false;
+                    bool addNewCustomer = true;
 
                     do
                     {
-                        Console.WriteLine("Lägg till en kund");
+                        Console.WriteLine("\nLägg till en kund");
                         Console.Write("\nAnge kundnamn [Ex: Olle Olsson]: ");
                         while (string.IsNullOrWhiteSpace(custName = Console.ReadLine()) || custName.Any(x => char.IsDigit(x) || custName.Any(c => char.IsPunctuation(c))))
                         {
@@ -200,34 +201,59 @@ namespace Affarssystemet
                             Console.Write("\nAnge kundnamn: ");
                         }
                         
-                        Console.Write("\nAnge kundadress [Ex: Skolgatan 3]: ");
+                        Console.Write("\nAnge kundadress [Ex: Marknadsvägen 63, Jukkasjärvi]: ");
 
-                        while (string.IsNullOrWhiteSpace(custAddress = Console.ReadLine()) || custAddress.Any(c => char.IsPunctuation(c)))
+                        while (string.IsNullOrWhiteSpace(custAddress = Console.ReadLine()) || custAddress.Count(x => char.IsPunctuation(x))>1)
                         {
-                            Console.WriteLine("En kundadress måste anges och får endast innehålla bokstäver, siffror och blanksteg. Prova igen.");
+                            Console.WriteLine("En kundadress måste anges och får endast innehålla bokstäver, siffror, blanksteg och ett komma. Prova igen.");
                             Console.Write("\nAnge kundadress: ");
                         }
-                        Console.WriteLine("\nVill du lägga till kund med nedan uppgifter (J/N):");
+                        Console.WriteLine("\nVill du lägga till kund med nedan uppgifter? (J/N):");
                         Console.WriteLine(custName);
                         Console.WriteLine(custAddress);
                         ck = Console.ReadKey(false);
 
                         if (ck.Key == ConsoleKey.N)
                         {
-                            Console.WriteLine("\n\nLägg till ny kundinformation");
-                            doAgain = true;
+                            Console.WriteLine("\n\nVill du lägga till ny kundinformation? (J/N)\n");
+                            ck = Console.ReadKey(false);
+                            if (ck.Key == ConsoleKey.N)
+                            {
+                                addNewCustomer = false;
+                                doAgain = false;
+                            }
+                            else if (ck.Key == ConsoleKey.J)
+                                doAgain = true;
+                            else
+                            {
+                                doAgain = false;
+                                addNewCustomer = false;
+                                Console.WriteLine("\nFelaktigt val, gör om för att lägga till ny kund\n");
+                            }                                
+                        }
+                        else if (ck.Key == ConsoleKey.J)
+                        {
+                            doAgain = false;
+                            addNewCustomer = true;
                         }
                         else
+                        {
                             doAgain = false;
-                            
-
+                            addNewCustomer = false;
+                            Console.WriteLine("\nFelaktigt val, gör om för att lägga till ny kund\n");
+                        }   
                     } while (doAgain);
                     
-                    Customer customer = new Customer(shop.CustomerGetNextNumber(), custName, custAddress);
-                    shop.CustomersAddCustomer(customer);
 
-                    Console.WriteLine("\nKund tillagd med nedan uppgifter:");
-                    Console.WriteLine(customer.ToString());
+                    if(addNewCustomer)
+                    {
+                        Customer customer = new Customer(shop.CustomerGetNextNumber(), custName, custAddress);
+                        shop.CustomersAddCustomer(customer);
+
+                        Console.WriteLine("\nKund tillagd med nedan uppgifter:");
+                        Console.WriteLine(customer.ToString());
+
+                    }                    
 
                     Console.WriteLine("Tryck enter för att fortsätta.");
                     Console.ReadLine();
