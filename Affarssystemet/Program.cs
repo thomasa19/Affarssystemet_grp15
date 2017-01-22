@@ -105,14 +105,25 @@ namespace Affarssystemet
                             if (close2 == "q")
                                 return;                          
                         }
-                        Product product = new Product(shop.ProductGetNextNumber(), prodName, prodPrice, prodStorage);
-                        shop.ProductsAddProduct(product);
-                        Console.WriteLine(product);
 
+                        Console.WriteLine("\nDu kan avbryta med \"n\", tryck enter eller annan bokstav för att spara.");
+                        Console.WriteLine();
+                        cki = Console.ReadKey(true);
+                        if (cki.Key != ConsoleKey.N)
+                        {
+                            Product product;
+
+                            shop.ProductsAddProduct(product = new Product(shop.ProductGetNextNumber(), prodName, prodPrice, prodStorage));
+                            Console.WriteLine("\nProdukten är sparad.\n" + product);
+                        }
+                        else
+                            Console.WriteLine("Produkten registrerades inte.");
                         Console.WriteLine("Vill du lägga till fler produkter? j/n");
                        
                         cki = Console.ReadKey(false);
                     } while (cki.Key == ConsoleKey.J);
+
+                   
 
                     Console.WriteLine("");
                     Console.WriteLine("Tryck enter för att fortsätta.");
